@@ -1,0 +1,17 @@
+﻿sample.ID,treatment,N
+A2 Open 1,Enriched,1.084389197
+A2 Open 2,Enriched,0.829392034
+A2 1x1 1,Enriched,0.93489328
+A2 1x1 2,Enriched,1.064972666
+B3 3x3 1,Enriched,1.02285019
+B3 3x3 2,Enriched,1.099219052
+C3 2x2 1,Enriched,1.136318111
+C3 2x2 2,Enriched,0.972366348
+Block 1-1,Control,0.757205369
+Block 1-2,Control,0.932484901
+Block 2-1,Control,0.892411384
+Block 2-2,Control,0.962706044
+Block 3-1,Control,0.90952887
+Block 3-2,Control,1.048
+Block 4-1,Control,0.884764398
+Block 4-2,Control,0.919423286

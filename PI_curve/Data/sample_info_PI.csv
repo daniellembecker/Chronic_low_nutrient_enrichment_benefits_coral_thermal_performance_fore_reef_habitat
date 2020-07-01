@@ -1,0 +1,11 @@
+﻿fragment.ID,treatment,surf.area.cm2,volume
+PV9,enriched,69.41,620
+PV12,enriched,54.96,620
+PV13,enriched,75.70,620
+PV16,enriched,48.69,625
+PV22,control,40.20,635
+PV23,control,64.91,625
+PV27,control,68.22,600
+PV30,control,61.11,615
+BLANK1,BLANK,,650
+BLANK2,BLANK,,650

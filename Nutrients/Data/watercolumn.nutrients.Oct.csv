@@ -1,0 +1,13 @@
+﻿sample.ID,treatment,condition,P,N.N,NH4,N.N+NH4,DIN:DIP
+Control 2,Control,field,0.09,0.05,0.09,0.14,1.555555556
+Control 3,Control,field,0.1,0.12,0.1,0.22,2.2
+Control 4,Control,field,0.09,0.05,0.03,0.08,0.888888889
+Enriched 1,Enriched,field,0.13,0.18,0.23,0.41,3.153846154
+Enriched 2,Enriched,field,0.24,0.24,0.26,0.5,2.083333333
+Enriched 4,Enriched,field,0.31,0.26,0.32,0.58,1.870967742
+Enriched 3,Enriched,field,0.24,0.17,0.36,0.53,2.208333333
+Control tank 2,Control Tank,tank,0.11,0.02,0.43,0.45,4.090909091
+Control tank 3,Control Tank,tank,0.13,0.05,0.46,0.51,3.923076923
+Control tank 1,Control Tank,tank,0.13,0.21,0.48,0.69,5.307692308
+Enriched tank 2,Enriched Tank,tank,0.29,0.46,1.03,1.49,5.137931034
+Enriched tank 1,Enriched Tank,tank,0.19,0.55,1.09,1.64,8.631578947
