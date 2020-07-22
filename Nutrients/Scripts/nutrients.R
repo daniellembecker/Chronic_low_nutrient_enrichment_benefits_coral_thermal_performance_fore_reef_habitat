@@ -22,14 +22,12 @@ library(here)
 library(lme4)
 library(lmerTest)
 
-#set wd
 here()
-getwd()
 
 ##########################################################
 #macroalgal CHN data 
 #load calculated macroalgal N data
-mydata <- read.csv("October_2019/nutrients/Data/macroalgal_data.csv")
+mydata <- read.csv("Nutrients/Data/macroalgal_data.csv")
 View(mydata)
 
 #need to organize data so it recognizes seperate sites
@@ -85,12 +83,12 @@ a <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   xlab("") + ylab(expression(bold("% Nitrogen Content"))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "October_2019/nutrients/Output/N.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.boxplot.png", device = "png", width = 10, height = 12)
 
 ###########################################################################
 #water column nutrient data for just the in situ sites, not tanks
 #load water column nutrient data
-  watercol.dat <- read.csv("October_2019/nutrients/Data/watercolumn.nutrients.Oct.csv")
+  watercol.dat <- read.csv("Nutrients/Data/watercolumn.nutrients.Oct.csv")
 View(watercol.dat)
 
 
@@ -157,6 +155,7 @@ data.summary<-watercol.dat.insitu %>%
   summarise(mean=mean(N.N), se=sd(N.N)/sqrt(n())) #calculates mean 
 data.summary
 
+
 boxplot(N.N~treatment, data=watercol.dat.insitu, ylab= "Nitrate")
 
 bartlett.test(N.N~treatment, data=watercol.dat.insitu)
@@ -176,7 +175,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/N.N.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.N.boxplot.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for P comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -208,7 +207,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/P.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/P.boxplot.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -240,7 +239,7 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/NH4.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/NH4.boxplot.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -271,7 +270,7 @@ e <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   xlab("Treatment") + ylab(expression(bold("DIN:DIP"))) +
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/nutrients/Output/DIN:DIP.boxplot.png", device = "png", width = 10, height = 13)
+ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.png", device = "png", width = 10, height = 13)
 
 
 ##################################################################################
@@ -310,7 +309,7 @@ x <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/N.N.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.N.tanks.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for P comparisons
 SummaryByGroup <- watercol.dat.tanks %>%
@@ -342,7 +341,7 @@ y <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/P.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/P.tanks.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <-watercol.dat.tanks %>%
@@ -374,7 +373,7 @@ z <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/NH4.tankst.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/NH4.tankst.png", device = "png", width = 10, height = 12)
 
 #check variance and make plot for DIN:DIP comparisons
 SummaryByGroup <-watercol.dat.tanks %>%
@@ -406,7 +405,7 @@ q <- ggplot(data.summary, aes(x=treatment, y=mean)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "October_2019/nutrients/Output/DIN.DIP.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/DIN.DIP.tanks.png", device = "png", width = 10, height = 12)
 
 
 
@@ -420,7 +419,7 @@ figure <- x + y + z + q +       #patchwork to combine plots
 figure
 
 
-ggsave(filename = "October_2019/nutrients/Output/tank_nutrient_graphs.png", device = "png", width = 13, height = 13)
+ggsave(filename = "Nutrients/Output/tank_nutrient_graphs.png", device = "png", width = 13, height = 13)
 
 
 ###########################################################################################################
@@ -435,12 +434,12 @@ figure <- a + b + c + d + e  +         #patchwork to combine plots
 figure
 
 
-ggsave(filename = "October_2019/nutrients/Output/nutrient_graphs.png", device = "png", width = 15, height = 13)
+ggsave(filename = "Nutrients/Output/nutrient_graphs.png", device = "png", width = 15, height = 13)
 
 ###########################################################################################################
 #compare enriched tank to enriched water column nutrients
 
-reef.tank.conditions <- read.csv("October_2019/nutrients/Data/watercolumn.nutrients.Oct.csv")
+reef.tank.conditions <- read.csv("Nutrients/Data/watercolumn.nutrients.Oct.csv")
 View(reef.tank.conditions)
 
 
@@ -480,20 +479,20 @@ ggplot(data.summary, aes(x=treatment, y=mean, color = condition)) +
   xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
   theme(legend.position = "none") 
 
-data.summary<-reef.tank.conditions1 %>%
+data.summary<-reef.tank.conditions %>%
   group_by(treatment) %>% #tells to group by treatment
   summarise(mean=mean(P), se=sd(P)/sqrt(n())) #calculates mean 
 data.summary
 
-boxplot(P~treatment, data=reef.tank.conditions1, ylab= "Nitrate")
+boxplot(P~treatment, data=reef.tank.conditions, ylab= "Nitrate")
 
-bartlett.test(P~treatment, data=reef.tank.conditions1)
+bartlett.test(P~treatment, data=reef.tank.conditions)
 
 #p>0.05 means variances are equal, use students t test
 
 #use two-sample student t-test to test 
 
-compare_means (P~treatment, data = reef.tank.conditions1, method = "t.test")
+compare_means (P~treatment, data = reef.tank.conditions, method = "t.test")
 
 ggplot(data.summary, aes(x=treatment, y=mean)) + 
   geom_point(size=6) +

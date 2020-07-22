@@ -7,6 +7,7 @@ rm(list=ls())
 library(nls.multstart)
 library(sjPlot)
 library(broom)
+library(wesanderson)
 library(patchwork)
 library(tidyverse)
 library(nlstools)
@@ -24,7 +25,7 @@ here()
 
 #load data
 
-mydata <- read.csv("October_2019/thermtol/Data/Photo.T.csv")
+mydata <- read.csv("Thermal_Performance/Data/Photo.T.csv")
 mydata$X <- NULL
 View(mydata)
 glimpse(mydata)
@@ -113,11 +114,11 @@ params <- fits %>%
 
 
 #left join params with meta data file to have treatment in data frame
-metadata <- read.csv(file="October_2019/thermtol/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
+metadata <- read.csv(file="Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
 params <- left_join(params, metadata)
 
 #left join params with meta data file to have block in file
-metadata <- read.csv(file="October_2019/thermtol/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
+metadata <- read.csv(file="Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
 params <- left_join(params, metadata)
 
 # get confidence intervals
@@ -181,7 +182,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "October_2019/thermtol/Output/respindiv.curves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "Thermal_Performance/Output/respindiv.curves.png", device = "png", width = 10, height = 10)
   
 #want to do ggplot where we look at individual curves for photosynthesis rates of each fragment
   mydataGP <- mydata %>%
@@ -203,7 +204,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "October_2019/thermtol/Output/photoindiv.curves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "Thermal_Performance/Output/photoindiv.curves.png", device = "png", width = 10, height = 10)
 
 
   
@@ -212,19 +213,21 @@ preds2 <- left_join(preds2, metadata)
     mutate(treatment = recode_factor(treatment, `control` = "Control", `enriched` = "Enriched"))
   
 # plot all P and R values in TPCs
-ggplot() +
-  geom_point(aes(K - 273.15, log.rate, col = rate.type), size = 2, mydata) +
-  geom_line(aes(K - 273.15, ln.rate, col = rate.type, group = fragment.ID), alpha = 0.5, preds2) +
-  scale_colour_manual(values = c('green4', 'blue')) +
+a <- ggplot() +
+  geom_point(aes(K - 273.15, log.rate, col = treatment), size = 2, mydata) +
+  geom_line(aes(K - 273.15, ln.rate, col = treatment, group = fragment.ID), alpha = 0.5, preds2) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme_bw(base_size = 12, base_family = 'Helvetica') +
-  ylab(expression("Log (" *mu*"mol " *cm^-2 *hr^-1*")")) +
+  ylab(expression(bold("Log Rate (" *mu*"mol " *cm^-2 *hr^-1*")"))) +
   xlab('Temperature (ºC)') +
-  facet_grid(~ treatment) + #rename facet wrap headings
-  theme(legend.position = "right") +
-  labs(col = "Rate Type") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) 
-  
-ggsave(filename = "October_2019/thermtol/Output/TPCcurves.png", device = "png")
+  facet_grid(~ rate.type) + #rename facet wrap headings
+  theme(strip.text.x = element_text(size=18, face = "bold")) +
+  theme(legend.position = "none",
+        axis.text.x=element_text(face="bold", color="black", size=16), 
+        axis.text.y=element_text(face="bold", color="black", size=13), axis.title.x = element_text(color="black", size=18, face="bold"), axis.title.y = element_text(color="black", size=20, face="bold"),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
+  labs(col = "Treatment") 
+ 
+ggsave(filename = "Thermal_Performance/Output/TPCcurves.png", device = "png")
 
 
 #want to do ggplot where we look at one single set of curves
@@ -262,7 +265,7 @@ ggplot() +
   labs(col = "Rate Type") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) 
 
-ggsave(filename = "October_2019/thermtol/Output/singlecurve.CSUN.png", device = "png", width = 6, height = 5)
+ggsave(filename = "Thermal_Performance/Output/singlecurve.CSUN.png", device = "png", width = 6, height = 5)
 
 
 # function for calculating Topt
@@ -277,7 +280,7 @@ Topt_data <- params %>%
   spread(term, estimate) %>%
   mutate(Topt = get_topt(E, Th, Eh)) 
 
-write.csv(Topt_data, 'October_2019/thermtol/Data/Topt_data.csv') 
+write.csv(Topt_data, 'Thermal_Performance/Data/Topt_data.csv') 
 
 #chnage control and enriched names
 Topt_data <- Topt_data %>% 
@@ -322,21 +325,22 @@ data.summary
 
 #data.summary$rate.type <- factor(data.summary$rate.type, levels = c("R", "GP")) 
 
-c <- ggplot(data.summary, aes(x=treatment, y=mean)) +
+d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme_bw() +
-  theme(legend.title=element_text(colour="black", size=14), 
-        axis.text.x=element_text(face="bold", color="black", size=18), 
-        axis.text.y=element_text(face="bold", color="black", size=13), axis.title.x = element_text(color="black", size=20, face="bold"), axis.title.y = element_text(color="black", size=20, face="bold"),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
-  labs(x="Treatment", y= expression(bold(paste(atop("Acute Thermal Optimum",  "(°C)", fill="treatment", color = "Treatment"))))) +
+  labs(x="Treatment", y= expression(bold(paste(atop("Acute Thermal Optimum",  "(°C)"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
-  theme(strip.text.x = element_text(size=18, face = "bold")) 
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.position="none", 
+        axis.text.x=element_text(face="bold", color="black", size=18), 
+        axis.text.y=element_text(face="bold", color="black", size=13), axis.title.x = element_text(color="black", size=20, face="bold"), axis.title.y = element_text(color="black", size=20, face="bold"),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
+  theme(strip.text.x = element_blank())
  
 
  
-ggsave(filename = "October_2019/thermtol/Output/Topt_graph.png", device = "png", width = 8, height = 5)
+ggsave(filename = "Thermal_Performance/Output/Topt_graph.png", device = "png", width = 8, height = 5)
 
 
 
@@ -371,23 +375,25 @@ data.summary<-Topt_data %>%
 data.summary
 
 
-b <- ggplot(data.summary, aes(x=treatment, y=mean)) +
+c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme_bw() +
-  theme(legend.title=element_text(colour="black", size=14), 
-        axis.text.x=element_text(face="bold", color="black", size=16), 
-        axis.text.y=element_text(face="bold", color="black", size=13), 
-        axis.title.x = element_text(color="black", size=18, face="bold"), 
-        axis.title.y = element_text(color="black", size=20, face="bold"),
-        panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
-  labs(x="Treatment", y=expression(bold(paste(atop("Rate at a reference temperature",  "(" *mu*"mol " *cm^-2 *hr^-1*")"))))) +
+  labs(x="", y=expression(bold(paste(atop("Rate at a reference temperature",  "(" *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
-  theme(strip.text.x = element_text(size=18, face = "bold")) 
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.position="none", 
+        axis.text.x=element_blank(), 
+        axis.text.y=element_text(face="bold", color="black", size=13), 
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(color="black", size=20, face="bold"), 
+        panel.grid.major=element_blank(), 
+        panel.grid.minor=element_blank()) +
+  theme(strip.text.x = element_blank())
 
 
-ggsave(filename = "October_2019/thermtol/Output/lnc_graph.png", device = "png", width = 8, height = 7)
+ggsave(filename = "Thermal_Performance/Output/lnc_graph.png", device = "png", width = 8, height = 7)
     
 
 #calculate Pmax values between sites
@@ -398,7 +404,7 @@ Pmax_data <- Topt_data %>%
   mutate(Pmax = schoolfield_high(lnc = lnc, E = E, Th = Th, Eh = Eh, temp = Topt + 273.15, Tc = 26)) %>% #add in factors that make up schoolfield function, reference topt to get pmax
   group_by(., rate.type, treatment, fragment.ID)
 
-write.csv(Pmax_data, 'October_2019/thermtol/Data/Pmax_data.csv') # export all the uptake rates
+write.csv(Pmax_data, 'Thermal_Performance/Data/Pmax_data.csv') # export all the uptake rates
 
 #drop NP
 Pmax_data$rate.type <- droplevels(Pmax_data$rate.type)
@@ -430,25 +436,29 @@ data.summary<-Pmax_data %>%
   summarise(mean=mean(Pmax), se=sd(Pmax)/sqrt(n())) #calculates mean and s.e.
 data.summary
 
-a <- ggplot(data.summary, aes(x=treatment, y=mean)) +
+b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme_bw() +
-  theme(legend.title=element_text(colour="black", size=14), 
-        axis.text.x=element_text(face="bold", color="black", size=16), 
-        axis.text.y=element_text(face="bold", color="black", size=13), axis.title.x = element_text(color="black", size=18, face="bold"), axis.title.y = element_text(color="black", size=20, face="bold"),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
-  labs(x="Treatment", y=expression(bold(paste(atop("Maximal perfromance",  "(" *mu*"mol " *cm^-2 *hr^-1*")")))), fill="treatment", color = "Treatment") +
+  labs(x="", y=expression(bold(paste(atop("Maximal perfromance",  "(" *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
-  theme(strip.text.x = element_text(size=18, face = "bold")) 
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.position="none", 
+        axis.text.x=element_blank(), 
+        axis.text.y=element_text(face="bold", color="black", size=13), 
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(color="black", size=20, face="bold"), 
+        panel.grid.major=element_blank(), 
+        panel.grid.minor=element_blank()) +
+  theme(strip.text.x = element_blank())
 
 
 
+ggsave(filename = "Thermal_Performance/Output/Pmax_graph.png", device = "png", width = 8, height = 6)
 
-ggsave(filename = "October_2019/thermtol/Output/Pmax_graph.png", device = "png", width = 8, height = 6)
 
-
-figure <- a / b / c +           #patchwork to combine plots
+figure <- a / b / c / d +           #patchwork to combine plots
   plot_annotation(tag_levels = 'A') &         #label each individual plot with letters A-G
   theme(plot.tag = element_text(size = 20, face = "bold"))   #edit the lettered text
 
@@ -456,7 +466,7 @@ figure <- a / b / c +           #patchwork to combine plots
 
 figure
 
-ggsave(filename = "October_2019/thermtol/Output/holo_graphs.png", device = "png", width = 10, height = 15)
+ggsave(filename = "Thermal_Performance/Output/holo_graphs.png", device = "png", width = 10, height = 20)
 
 
 #arrange models to make table of models results
