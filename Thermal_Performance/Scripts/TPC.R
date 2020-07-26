@@ -212,13 +212,14 @@ preds2 <- left_join(preds2, metadata)
   preds2 <- preds2 %>% 
     mutate(treatment = recode_factor(treatment, `control` = "Control", `enriched` = "Enriched"))
   
+
 # plot all P and R values in TPCs
 a <- ggplot() +
   geom_point(aes(K - 273.15, log.rate, col = treatment), size = 2, mydata) +
   geom_line(aes(K - 273.15, ln.rate, col = treatment, group = fragment.ID), alpha = 0.5, preds2) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme_bw(base_size = 12, base_family = 'Helvetica') +
-  ylab(expression(bold("Log Rate (" *mu*"mol " *cm^-2 *hr^-1*")"))) +
+  ylab(expression(bold("Rate (log " *mu*"mol " *cm^-2 *hr^-1*")"))) +
   xlab('Temperature (ºC)') +
   facet_grid(~ rate.type) + #rename facet wrap headings
   theme(strip.text.x = element_text(size=18, face = "bold")) +
@@ -226,7 +227,8 @@ a <- ggplot() +
         axis.text.x=element_text(face="bold", color="black", size=16), 
         axis.text.y=element_text(face="bold", color="black", size=13), axis.title.x = element_text(color="black", size=18, face="bold"), axis.title.y = element_text(color="black", size=20, face="bold"),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) +
   labs(col = "Treatment") 
- 
+
+
 ggsave(filename = "Thermal_Performance/Output/TPCcurves.png", device = "png")
 
 
@@ -380,7 +382,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
-  labs(x="", y=expression(bold(paste(atop("Rate at a reference temperature",  "(" *mu*"mol " *cm^-2 *hr^-1*")"))))) +
+  labs(x="", y=expression(bold(paste(atop("Rate at a reference temperature",  "(log " *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position="none", 
@@ -441,7 +443,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
-  labs(x="", y=expression(bold(paste(atop("Maximal perfromance",  "(" *mu*"mol " *cm^-2 *hr^-1*")"))))) +
+  labs(x="", y=expression(bold(paste(atop("Maximal perfromance",  "(log " *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position="none", 
@@ -451,16 +453,15 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
         axis.title.y = element_text(color="black", size=20, face="bold"), 
         panel.grid.major=element_blank(), 
         panel.grid.minor=element_blank()) +
-  theme(strip.text.x = element_blank())
-
+  theme(strip.text.x = element_blank()) 
 
 
 ggsave(filename = "Thermal_Performance/Output/Pmax_graph.png", device = "png", width = 8, height = 6)
 
 
-figure <- a / b / c / d +           #patchwork to combine plots
-  plot_annotation(tag_levels = 'A') &         #label each individual plot with letters A-G
-  theme(plot.tag = element_text(size = 20, face = "bold"))   #edit the lettered text
+figure <- a / b / c / d           #patchwork to combine plots
+  #plot_annotation(tag_levels = 'A') &         #label each individual plot with letters A-G
+  #theme(plot.tag = element_text(size = 20, face = "bold"))   #edit the lettered text
 
 
 
