@@ -7,6 +7,7 @@ rm(list=ls())
 
 library(ggpubr)
 library(reshape)
+library(wesanderson)
 library(ggsignif)
 library(tidyverse)
 library(dplyr)
@@ -75,12 +76,13 @@ data.summary
 
 compare_means (N~treatment, data = mydata, method = "t.test")
 
-a <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +  
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold("% Nitrogen Content"))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 ggsave(filename = "Nutrients/Output/N.boxplot.png", device = "png", width = 10, height = 12)
@@ -166,12 +168,13 @@ bartlett.test(N.N~treatment, data=watercol.dat.insitu)
 
 compare_means (N.N~treatment, data = watercol.dat.insitu, method = "t.test")
 
-b <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Nitrate~(NO["3"]^~~{"-"})~+~Nitrite~(NO["2"]^~~{"-"})~(mu*mol~L^{-1})))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -198,12 +201,13 @@ bartlett.test(P~treatment, data=watercol.dat.insitu)
 
 compare_means (P~treatment, data = watercol.dat.insitu, method = "t.test")
 
-c <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Phosphate~(PO["4"]^~~{"3-"})~(mu*mol~L^{-1}))))  +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -230,12 +234,13 @@ bartlett.test(NH4~treatment, data=watercol.dat.insitu)
 
 compare_means (NH4~treatment, data = watercol.dat.insitu, method = "t.test")
 
-d <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -262,12 +267,13 @@ bartlett.test(DIN.DIP~treatment, data=watercol.dat.insitu)
 
 compare_means (DIN.DIP~treatment, data = watercol.dat.insitu, method = "t.test")
 
-e <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=26), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("Treatment") + ylab(expression(bold("DIN:DIP"))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none")
 
 ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.png", device = "png", width = 10, height = 13)
@@ -300,12 +306,13 @@ bartlett.test(N.N~treatment, data=watercol.dat.tanks)
 
 compare_means (N.N~treatment, data = watercol.dat.tanks, method = "t.test")
 
-x <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+x <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Nitrate~(NO["3"]^~~{"-"})~+~Nitrite~(NO["2"]^~~{"-"})~(mu*mol~L^{-1})))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -332,12 +339,13 @@ bartlett.test(P~treatment, data=watercol.dat.tanks)
 
 compare_means (P~treatment, data = watercol.dat.tanks, method = "t.test")
 
-y <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+y <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Phosphate~(PO["4"]^~~{"3-"})~(mu*mol~L^{-1}))))  +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -364,12 +372,13 @@ bartlett.test(NH4~treatment, data=watercol.dat.tanks)
 
 compare_means (NH4~treatment, data = watercol.dat.tanks, method = "t.test")
 
-z <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+z <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
@@ -396,12 +405,13 @@ bartlett.test(DIN.DIP~treatment, data=watercol.dat.tanks)
 
 compare_means (DIN.DIP~treatment, data = watercol.dat.tanks, method = "t.test")
 
-q <- ggplot(data.summary, aes(x=treatment, y=mean)) + 
+q <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size=6) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold("DIN:DIP"))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 

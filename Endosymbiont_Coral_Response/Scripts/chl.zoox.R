@@ -9,6 +9,7 @@ library(RColorBrewer)
 library(ghibli)
 library(ggpubr)
 library(patchwork)
+library(wesanderson)
 library(sjPlot)
 library(MASS)
 library(moments)
@@ -23,15 +24,13 @@ library(here)
 
 #set wd
 here()
-getwd()
-
 
 #load data
 
-mydata <- read.csv("October_2019/physio/Data/chl_zoox_sheet.csv")
+mydata <- read.csv("Endosymbiont_Coral_Response/Data/chl_zoox_sheet.csv")
 View(mydata)
 
-metadata <- read.csv("October_2019/physio/Data/metadata.physio.csv")
+metadata <- read.csv("Endosymbiont_Coral_Response/Data/metadata.physio.csv")
 
 mydata <- left_join(mydata, metadata )
 
@@ -90,9 +89,9 @@ data.summary<-mydata %>%
 data.summary
 
 
-b <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+b <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -102,7 +101,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Total Chlorophyll Content", "("*mu*g *~ cm^"-2"*")")))))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")  
 
-ggsave(filename = "October_2019/physio/Output/chloro.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.png", device = "png", width = 5, height = 5)
  
 #analysis for treatment x chlA.pg.cel and graphs 
 #check for normality, use normality plots
@@ -145,9 +144,9 @@ data.summary<-mydata %>%
 data.summary
 
 
-c <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+c <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -157,7 +156,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Chlorophyll Content per Cell", "(" *pg*~ cell^"-1"*")")))))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/chloro.cell.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.png", device = "png", width = 5, height = 5)
 
 #stat_compare_means( method = "t.test") #to remove the space between x axis and bar graphs
 
@@ -201,9 +200,9 @@ ggsave(filename = "October_2019/physio/Output/chloro.cell.png", device = "png", 
    summarise(mean=mean(zoox.per.cm2), se=sd(zoox.per.cm2)/sqrt(n())) #calculates mean 
  data.summary
  
-a <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -213,13 +212,13 @@ a <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Density", "(" *x*"10"^"6" *~cells *~ cm^"-2"*")"))))) + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/zoox.png", device = "png", width = 5, height = 6)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.png", device = "png", width = 5, height = 6)
 
 #analysis for treatment x AFDW graphs
 
 #load data
 
-AFDWdata <- read.csv("October_2019/physio/Data/AFDW.csv")
+AFDWdata <- read.csv("Endosymbiont_Coral_Response/Data/AFDW.csv")
 View(AFDWdata)
 
 AFDWdata <- left_join(AFDWdata, metadata)
@@ -278,9 +277,9 @@ data.summary<-AFDWdata %>%
   summarise(mean=mean(AFDW.mg.cm2.), se=sd(AFDW.mg.cm2.)/sqrt(n())) #calculates mean 
 data.summary
 
-d <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -290,15 +289,15 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("Treatment") + ylab(expression(bold(paste(atop("Tissue Biomass", "(mg "*cm^"-2"*")"))))) +  #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/biomass.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.png", device = "png", width = 5, height = 5)
 
 ################################################################################################################################
 #load data for tissue N content info
 
-mydata2 <- read.csv("October_2019/physio/Data/tissueNcontent.Oct.csv")
+mydata2 <- read.csv("Endosymbiont_Coral_Response/Data/tissueNcontent.Oct.csv")
 View(mydata2)
 
-metadata.N <- read.csv("October_2019/physio/Data/metadata.tissueN.csv")
+metadata.N <- read.csv("Endosymbiont_Coral_Response/Data/metadata.tissueN.csv")
 
 #left join metadata
 mydata2 <- left_join(mydata2, metadata.N)
@@ -362,19 +361,19 @@ anova(tissue.mod)
 #plot % N values between AT and ST overall
 ggplot(mydata2, aes(x=sample.type, y=N, fill=sample.type)) + 
   geom_boxplot(alpha=0.8) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   labs(fill = "Sample Type") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) +
   xlab("Sample Type") + ylab("% Nitrogen Content") +
   theme(axis.text.x=element_text(face="bold", color="black", size=24), axis.text.y=element_text(face="bold", color="black", size=18), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank())+  #adjust themes for chart x and y axis labels and axis tick mark labels 
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.png", device = "png", width = 10, height = 10)
 
 #plot % N values between AT and ST by treatment
-ggplot(mydata2, aes(x=treatment, y=N, fill=treatment)) + 
+ggplot(mydata2, aes(x=treatment, y=N, col = treatment)) + 
   geom_boxplot(alpha=0.8) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   labs(fill = "Sample Type") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) +
   theme(legend.position="none") +
@@ -384,7 +383,7 @@ ggplot(mydata2, aes(x=treatment, y=N, fill=treatment)) +
   theme(legend.position = "none") +
   theme(strip.text.x = element_text(size=12, face = "bold"))
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.per treatment.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.per treatment.png", device = "png", width = 10, height = 10)
 
 #filter just ST values to compare pgN/cell and % N algal endosymbionts
 mydata2.ST <- mydata2 %>%
@@ -409,9 +408,9 @@ anova(pgN.mod)
 tab_model(pgN.mod)
 
 #plot pg/cell between treatments
-e <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -421,7 +420,7 @@ e <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Nitrogen Content", "(pg N"*~ cell^"-1"*")"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = 6)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = 6)
 
 
 #check variance
@@ -444,9 +443,9 @@ data.summary<-mydata2.ST %>%
 data.summary
 
 #plot pg/cell between treatments
-f <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+f <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -456,7 +455,7 @@ f <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Total Endosymbiont", "% Nitrogen Content"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.ST.percentN.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.percentN.png", device = "png", width = 10, height = 10)
 
 #filter just AT values to compare % N coral tissue
 mydata2.AT <- mydata2 %>%
@@ -482,9 +481,9 @@ data.summary<-mydata2.AT %>%
 data.summary
 
 #plot % N AT between treatments
-g <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+g <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -494,7 +493,7 @@ g <- ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Coral Tissue", "% Nitrogen Content"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.AT.percentN.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.AT.percentN.png", device = "png", width = 10, height = 10)
 
 #use patchwork to organize figure
 
@@ -505,7 +504,7 @@ figure <- a + b + c + e + f + g + d  +           #patchwork to combine plots
 
 figure
 
-ggsave(filename = "October_2019/physio/Output/physio_graphs.png", device = "png", width = 17, height = 19)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/physio_graphs.png", device = "png", width = 17, height = 19)
 
 
 #arrange models to make table of models results 
@@ -516,9 +515,9 @@ endo_coral_M2 <- tab_model(chl.mod, chl.cell.mod, zoox.mod,  pgN.mod, N.ST.mod, 
 
 
 
-ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -528,11 +527,11 @@ ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("Treatment") + ylab(expression(bold("Endosymbiont Density (" *x*"10"^"6" *~cells *~ cm^"-2"*")"))) + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/zoox.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.png", device = "png", width = 5, height = 7)
 
-ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -542,11 +541,11 @@ ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("Treatment") + ylab(expression(bold("Total Chlorophyll Content ("*mu*g *~ cm^"-2"*")")))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")  
 
-ggsave(filename = "October_2019/physio/Output/chloro.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.png", device = "png", width = 5, height = 7)
 
-ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -556,11 +555,11 @@ ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("Treatment") + ylab(expression(bold("Tissue Biomass (mg "*cm^"-2"*")")))  +  #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "October_2019/physio/Output/biomass.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.png", device = "png", width = 5, height = 7)
 
-ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) + 
+ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
-  scale_fill_ghibli_d("MarnieMedium1") +
+  scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
@@ -570,4 +569,4 @@ ggplot(data.summary, aes(x=treatment, y=mean, fill=treatment)) +
   xlab("Treatment") + ylab(expression(bold(paste("Endosymbiont Nitrogen Content (pg N"*~ cell^"-1"*")")))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "October_2019/physio/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = )
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = )
