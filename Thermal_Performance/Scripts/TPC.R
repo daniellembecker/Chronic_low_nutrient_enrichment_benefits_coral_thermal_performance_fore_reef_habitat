@@ -182,7 +182,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "Thermal_Performance/Output/respindiv.curves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "Thermal_Performance/Output/respindiv.curves.pdf", device = "pdf", width = 10, height = 10)
   
 #want to do ggplot where we look at individual curves for photosynthesis rates of each fragment
   mydataGP <- mydata %>%
@@ -204,7 +204,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "Thermal_Performance/Output/photoindiv.curves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "Thermal_Performance/Output/photoindiv.curves.pdf", device = "pdf", width = 10, height = 10)
 
 
   
@@ -229,7 +229,7 @@ a <- ggplot() +
   labs(col = "Treatment") 
 
 
-ggsave(filename = "Thermal_Performance/Output/TPCcurves.png", device = "png")
+ggsave(filename = "Thermal_Performance/Output/TPCcurves.pdf", device = "pdf")
 
 
 #want to do ggplot where we look at one single set of curves
@@ -267,7 +267,7 @@ ggplot() +
   labs(col = "Rate Type") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) 
 
-ggsave(filename = "Thermal_Performance/Output/singlecurve.CSUN.png", device = "png", width = 6, height = 5)
+ggsave(filename = "Thermal_Performance/Output/singlecurve.CSUN.pdf", device = "pdf", width = 6, height = 5)
 
 
 # function for calculating Topt
@@ -342,7 +342,7 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
  
 
  
-ggsave(filename = "Thermal_Performance/Output/Topt_graph.png", device = "png", width = 8, height = 5)
+ggsave(filename = "Thermal_Performance/Output/Topt_graph.pdf", device = "pdf", width = 8, height = 5)
 
 
 
@@ -395,7 +395,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(strip.text.x = element_blank())
 
 
-ggsave(filename = "Thermal_Performance/Output/lnc_graph.png", device = "png", width = 8, height = 7)
+ggsave(filename = "Thermal_Performance/Output/lnc_graph.pdf", device = "pdf", width = 8, height = 7)
     
 
 #calculate Pmax values between sites
@@ -456,7 +456,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(strip.text.x = element_blank()) 
 
 
-ggsave(filename = "Thermal_Performance/Output/Pmax_graph.png", device = "png", width = 8, height = 6)
+ggsave(filename = "Thermal_Performance/Output/Pmax_graph.pdf", device = "pdf", width = 8, height = 6)
 
 
 figure <- a / b / c / d           #patchwork to combine plots
@@ -467,7 +467,7 @@ figure <- a / b / c / d           #patchwork to combine plots
 
 figure
 
-ggsave(filename = "Thermal_Performance/Output/holo_graphs.png", device = "png", width = 10, height = 20)
+ggsave(filename = "Thermal_Performance/Output/holo_graphs.pdf", device = "pdf", width = 10, height = 20)
 
 
 #arrange models to make table of models results

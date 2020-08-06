@@ -1,4 +1,8 @@
-#Code to compare nutrients
+#Code to compare nutrients October 2019
+##created by Danielle Becker 03/02/20
+##edited by Danielle Becker 04/02/20
+
+
 #clear list 
 
 rm(list=ls())

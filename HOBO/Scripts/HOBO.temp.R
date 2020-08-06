@@ -1,4 +1,6 @@
 ##Processing temperature data for three tanks used in Mo'orea October trip, compare to fore reef temp data
+##created by Danielle Becker 03/02/20
+##edited by Danielle Becker 08/02/20
 
 #clear dataframe
 rm(list=ls())

@@ -2,23 +2,26 @@
 
 This repository includes data and analysis for the above manuscript
 
-**Authors:** Danielle M. Becker*, Deron E. Burkepile, Thomas C. Adam, Hollie M. Putnam, and Nyssa J. Silbiger
+**Authors:** Danielle M. Becker*, Hollie M. Putnam, Deron E. Burkepile, Thomas C. Adam, Rebecca Vega Thurber, and Nyssa J. Silbiger
 
 **Journal:** Coral Reefs
 
-**Link:** Submitting summer 2020
+**Link:** Submitting August 2020
 
-**Funding:** This research was funded in part by California State University, Northridge (CSUN) to NJS, U.S. National Science Foundation OCE#19-24281 to NJS and Emerging Frontiers 1921465 to HMP, CSUN Office of Graduate Studies, Department of Biology, Associated Students, College of Sciences and Mathematics, and Research and Graduate Studies to DMB, and the National Science Foundation 2019 Graduate Research Fellowship to DMB. Material are in this study based upon work supported by the U.S. National Science Foundation under Grant (OCE#16-37396) as well as a generous gift from the Gordon and Betty Moore Foundation. This work represents a contribution of the Mo'orea Coral Reef (MCR) LTER Site and is CSUN Marine Biology contribution #289. Research was completed under permits issued by the French Polynesian Government (De´le´gation a`la Recherche) and the Haut-commissariat de la Re´publique en Polyne´sie Francaise (DTRT) (Protocole d’Accueil 2005-2019).
+**Funding:** This research was funded in part by California State University, Northridge (CSUN) to NJS, U.S. National Science Foundation OCE#19-24281 to NJS and Emerging Frontiers 1921465 to HMP, CSUN Office of Graduate Studies, Department of Biology, Associated Students, College of Sciences and Mathematics, and Research and Graduate Studies to DMB, and the National Science Foundation 2019 Graduate Research Fellowship to DMB. Funds to conduct the enrichment study were also provided by National Science Foundation Biological Oceanography Grants # 1442306 and #1635913 to RVT and 1547952 to DEB. Material are also supported by the U.S. National Science Foundation under Grant OCE#16-37396, as well as a generous gift from the Gordon and Betty Moore Foundation. This work represents a contribution of the Mo'orea Coral Reef (MCR) LTER Site and is CSUN Marine Biology contribution #XXX. Research was completed under permits issued by the French Polynesian Government (De´le´gation a`la Recherche) and the Haut-commissariat de la Re´publique en Polyne´sie Francaise (DTRT) (Protocole d’Accueil 2005-2019).
 
 **Contents:** There are eight folders and a README.md file.
 
 **Folders:**
 
-**[Bioinformatics]()**    
+**[Bioinformatics](Bioinformatics)**    
 Contains data, output, and script files to compose an environmental parameters correlation matrix to compare environmental trends across our varying nutrient and sedimentation gradient within north shore fringing reef sites in Mo'orea, French Polynesia.
 
-**[Endosymbion_Coral](Effect_Sizes)**          
+**[Endosymbiont_Coral_Response](Endosymbiont_Coral_Response)**          
 Contains data, output, and script files to calculate and analyze the effect of the increasing nutrient and sediment gradient residuals on each coral, endosymbiont, and holobiont metabolic response variable
+
+**[HOBO](HOBO)**  
+Contains data, output, and script files to create a map of Mo'orea showing detailed information on the nutrient and sediment regime at each of our sampling sites. The data is represented by the average percent nitrogen content in *Turbinaria ornata* (macroalgal species) samples and sedimentation rates at each site.
 
 **[Map](Map)**  
 Contains data, output, and script files to create a map of Mo'orea showing detailed information on the nutrient and sediment regime at each of our sampling sites. The data is represented by the average percent nitrogen content in *Turbinaria ornata* (macroalgal species) samples and sedimentation rates at each site. 

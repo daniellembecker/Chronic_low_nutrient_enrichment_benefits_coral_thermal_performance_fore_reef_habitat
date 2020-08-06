@@ -1,4 +1,6 @@
-#Title: Photosynthesis and Respiration Calculations
+#Photosynthesis Irradiance Curve code October 2019
+##created by Danielle Becker 03/02/20
+##edited by Danielle Becker 04/02/20
 
 rm(list=ls()) #clears workspace 
 

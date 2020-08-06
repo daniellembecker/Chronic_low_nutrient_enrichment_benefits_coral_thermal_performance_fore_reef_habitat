@@ -1,4 +1,6 @@
-##Photosynthesis and Respiration code
+##Photosynthesis and Respiration code October 2019
+##created by Danielle Becker 03/02/20
+##edited by Danielle Becker 04/02/20
 
 rm(list=ls())
 
@@ -29,8 +31,8 @@ library('tidyverse')
 
 
 # get the file path
-setwd("~/Desktop/Thesis/LandBasedPollution_Moorea/October_2019/rates/")
-path.p<-"../rates/Data/Oct_TT" #the location of all your respirometry files
+setwd("../Respirometry/")
+path.p<-"../Respirometry/Data/Oct_TT" #the location of all your respirometry files
 
 getwd()
 
@@ -217,7 +219,7 @@ ggplot(Photo.R, aes(x=Temp.C, y=umol.cm2.hr,group = fragment.ID, col = fragment.
   geom_point()+  
   #ylim(0,1.5)+  
   facet_wrap(~ treatment*light_dark, labeller = labeller(.multi_line = FALSE))+
-  ggsave(filename = "Output/lowvshigh_curves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "Output/lowvshigh_curves.pdf", device = "pdf", width = 10, height = 10)
  
 write.csv(Photo.R, 'Output/TT_Rates.csv') # export all the uptake rates
 View(Photo.R)
@@ -263,16 +265,18 @@ Photo.T <- rbind(Photo.R, as.data.frame(Photo.R2))
 View(Photo.T)
 
 
-write.csv(Photo.T, '~/Desktop/Thesis/LandBasedPollution_Moorea/October_2019/thermtol/Data/Photo.T.csv') # export all the uptake rates
+write.csv(Photo.T, '../Thermal_Performance/Data/Photo.T.csv') # export all the uptake rates
 
+#check all rate types (GP, NP and R) curves
 ggplot(Photo.T, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = individual.ID))+
   geom_line(size=2)+
   geom_point()+  
   theme_bw ()+
   #ylim(0,1.5)+  
   facet_wrap(~ treatment*rate.type, labeller = labeller(.multi_line = FALSE))+ 
-  ggsave(filename = "../rates//Output/initialcurves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "../Respirometry/Output/initialcurves.pdf", device = "pdf", width = 10, height = 10)
 
+#check three various rate types (GP, NP and R) individaul curves
 Photo.T.GP <- Photo.T %>%
   filter(rate.type =="GP")
 
@@ -282,16 +286,9 @@ ggplot(Photo.T.GP, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = ind
   theme_bw ()+
   #ylim(0,1.5)+  
   facet_wrap(~ treatment*rate.type*fragment.ID, labeller = labeller(.multi_line = FALSE))+ 
-  ggsave(filename = "../rates//Output/GPcurves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "../Respirometry/Output/GPcurves.pdf", device = "pdf", width = 10, height = 10)
 
-
-#looking at 28 degrees data for corals from trial light and dark 2 to see where point problem is
-Photo.T1 <-  Photo.T %>%
-  filter(fragment.ID %in% c("PV1_D", "PV2_D", "PV7_D", "PV13_D", "PV17_D", "PV19_D", "PV23_D", "PV25_D",
-                            "PV1_L", "PV2_L", "PV7_L", "PV13_L", "PV17_L", "PV19_L", "PV23_L", "PV25_L")) %>%
-  filter(temp.Cat %in% c(24,28))
-
-Photo.T.NP <- Photo.T1 %>%
+Photo.T.NP <- Photo.T %>%
   filter(rate.type =="NP")
 
 ggplot(Photo.T.NP, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = individual.ID))+
@@ -300,9 +297,9 @@ ggplot(Photo.T.NP, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = ind
   theme_bw ()+
   #ylim(0,1.5)+  
   facet_wrap(~ treatment*rate.type*fragment.ID, labeller = labeller(.multi_line = FALSE))+ 
-  ggsave(filename = "../rates//Output/NPcurves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "../Respirometry/Output/NPcurves.pdf", device = "pdf", width = 10, height = 10)
 
-Photo.T.R <- Photo.T1 %>%
+Photo.T.R <- Photo.T %>%
   filter(rate.type =="R")
 
 ggplot(Photo.T.R, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = individual.ID))+
@@ -311,6 +308,6 @@ ggplot(Photo.T.R, aes(x=Temp.C, y=umol.cm2.hr, group = individual.ID, col = indi
   theme_bw ()+
   #ylim(0,1.5)+  
   facet_wrap(~ treatment*rate.type*fragment.ID, labeller = labeller(.multi_line = FALSE))+ 
-  ggsave(filename = "../rates//Output/Rcurves.png", device = "png", width = 10, height = 10)
+  ggsave(filename = "../Respirometry/Output/Rcurves.pdf", device = "pdf", width = 10, height = 10)
 
 
