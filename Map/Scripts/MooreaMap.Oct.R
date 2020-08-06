@@ -1,7 +1,7 @@
 ###############################################################################################
 ##Making map of moorea for October 2019
 ##created by Danielle Becker 03/02/20
-##edited by Danielle Becker 03/02/20
+##edited by Danielle Becker 04/02/20
 
 #clear dataframe#####
 rm(list=ls())
@@ -51,10 +51,6 @@ north2 (map, x=.27, y=.29, symbol=4)
 
 
 
-
-
-
-
 #zoomed in map version
 #make map and set sources
 myMap <- get_googlemap(center = c(-149.81, -17.48), maptype = "satellite", zoom = 15) 
@@ -79,7 +75,7 @@ map <- ggmap(myMap) +
 north2 (map, x=.784, y=.91, symbol=4) 
 
 
-png(filename = "October_2019/manuscript.figures/Output/MooreaMap.Oct.zoom.png")
+png(filename = "Output/MooreaMap.Oct.zoom.png")
 plot(map)
 dev.off
 

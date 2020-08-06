@@ -85,7 +85,7 @@ a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
-ggsave(filename = "Nutrients/Output/N.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.boxplot.pdf", device = "pdf", width = 10, height = 12)
 
 ###########################################################################
 #water column nutrient data for just the in situ sites, not tanks
@@ -178,7 +178,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/N.N.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.N.boxplot.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for P comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -211,7 +211,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/P.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/P.boxplot.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -244,7 +244,7 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/NH4.boxplot.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/NH4.boxplot.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -276,7 +276,7 @@ e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none")
 
-ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.png", device = "png", width = 10, height = 13)
+ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.pdf", device = "pdf", width = 10, height = 13)
 
 
 ##################################################################################
@@ -316,7 +316,7 @@ x <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/N.N.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.N.tanks.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for P comparisons
 SummaryByGroup <- watercol.dat.tanks %>%
@@ -349,7 +349,7 @@ y <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/P.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/P.tanks.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <-watercol.dat.tanks %>%
@@ -382,7 +382,7 @@ z <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/NH4.tankst.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/NH4.tankst.pdf", device = "pdf", width = 10, height = 12)
 
 #check variance and make plot for DIN:DIP comparisons
 SummaryByGroup <-watercol.dat.tanks %>%
@@ -415,7 +415,7 @@ q <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/DIN.DIP.tanks.png", device = "png", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/DIN.DIP.tanks.pdf", device = "pdf", width = 10, height = 12)
 
 
 
@@ -429,7 +429,7 @@ figure <- x + y + z + q +       #patchwork to combine plots
 figure
 
 
-ggsave(filename = "Nutrients/Output/tank_nutrient_graphs.png", device = "png", width = 13, height = 13)
+ggsave(filename = "Nutrients/Output/tank_nutrient_graphs.pdf", device = "pdf", width = 13, height = 13)
 
 
 ###########################################################################################################
@@ -444,7 +444,7 @@ figure <- a + b + c + d + e  +         #patchwork to combine plots
 figure
 
 
-ggsave(filename = "Nutrients/Output/nutrient_graphs.png", device = "png", width = 15, height = 13)
+ggsave(filename = "Nutrients/Output/nutrient_graphs.pdf", device = "pdf", width = 15, height = 13)
 
 ###########################################################################################################
 #compare enriched tank to enriched water column nutrients

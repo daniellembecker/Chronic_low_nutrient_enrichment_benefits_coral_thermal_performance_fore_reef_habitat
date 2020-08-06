@@ -101,7 +101,7 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Total Chlorophyll Content", "("*mu*g *~ cm^"-2"*")")))))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")  
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.pdf", device = "pdf", width = 5, height = 5)
  
 #analysis for treatment x chlA.pg.cel and graphs 
 #check for normality, use normality plots
@@ -156,7 +156,7 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Chlorophyll Content per Cell", "(" *pg*~ cell^"-1"*")")))))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.pdf", device = "pdf", width = 5, height = 5)
 
 #stat_compare_means( method = "t.test") #to remove the space between x axis and bar graphs
 
@@ -212,7 +212,7 @@ a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Density", "(" *x*"10"^"6" *~cells *~ cm^"-2"*")"))))) + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.png", device = "png", width = 5, height = 6)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.pdf", device = "pdf", width = 5, height = 6)
 
 #analysis for treatment x AFDW graphs
 
@@ -289,7 +289,7 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("Treatment") + ylab(expression(bold(paste(atop("Tissue Biomass", "(mg "*cm^"-2"*")"))))) +  #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.png", device = "png", width = 5, height = 5)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.pdf", device = "pdf", width = 5, height = 5)
 
 ################################################################################################################################
 #load data for tissue N content info
@@ -368,7 +368,7 @@ ggplot(mydata2, aes(x=sample.type, y=N, fill=sample.type)) +
   theme(axis.text.x=element_text(face="bold", color="black", size=24), axis.text.y=element_text(face="bold", color="black", size=18), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank())+  #adjust themes for chart x and y axis labels and axis tick mark labels 
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.pdf", device = "pdf", width = 10, height = 10)
 
 #plot % N values between AT and ST by treatment
 ggplot(mydata2, aes(x=treatment, y=N, col = treatment)) + 
@@ -383,7 +383,7 @@ ggplot(mydata2, aes(x=treatment, y=N, col = treatment)) +
   theme(legend.position = "none") +
   theme(strip.text.x = element_text(size=12, face = "bold"))
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.per treatment.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.per treatment.pdf", device = "pdf", width = 10, height = 10)
 
 #filter just ST values to compare pgN/cell and % N algal endosymbionts
 mydata2.ST <- mydata2 %>%
@@ -420,7 +420,7 @@ e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Nitrogen Content", "(pg N"*~ cell^"-1"*")"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = 6)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.pdf", device = "pdf", width = 5, height = 6)
 
 
 #check variance
@@ -455,7 +455,7 @@ f <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Total Endosymbiont", "% Nitrogen Content"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.percentN.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.percentN.pdf", device = "pdf", width = 10, height = 10)
 
 #filter just AT values to compare % N coral tissue
 mydata2.AT <- mydata2 %>%
@@ -493,7 +493,7 @@ g <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("") + ylab(expression(bold(paste(atop("Coral Tissue", "% Nitrogen Content"))))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.AT.percentN.png", device = "png", width = 10, height = 10)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.AT.percentN.pdf", device = "pdf", width = 10, height = 10)
 
 #use patchwork to organize figure
 
@@ -504,7 +504,7 @@ figure <- a + b + c + e + f + g + d  +           #patchwork to combine plots
 
 figure
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/physio_graphs.png", device = "png", width = 17, height = 19)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/physio_graphs.pdf", device = "pdf", width = 17, height = 19)
 
 
 #arrange models to make table of models results 
@@ -527,7 +527,7 @@ ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("Treatment") + ylab(expression(bold("Endosymbiont Density (" *x*"10"^"6" *~cells *~ cm^"-2"*")"))) + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.pdf", device = "pdf", width = 5, height = 7)
 
 ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
@@ -541,7 +541,7 @@ ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("Treatment") + ylab(expression(bold("Total Chlorophyll Content ("*mu*g *~ cm^"-2"*")")))  + #using quotations over numbers allow them to be bold
   theme(legend.position = "none")  
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.pdf", device = "pdf", width = 5, height = 7)
 
 ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
@@ -555,7 +555,7 @@ ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("Treatment") + ylab(expression(bold("Tissue Biomass (mg "*cm^"-2"*")")))  +  #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.png", device = "png", width = 5, height = 7)
+ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.pdf", device = "pdf", width = 5, height = 7)
 
 ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
   geom_point(size = 6) +
@@ -569,4 +569,4 @@ ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   xlab("Treatment") + ylab(expression(bold(paste("Endosymbiont Nitrogen Content (pg N"*~ cell^"-1"*")")))) +
   theme(legend.position = "none") 
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.png", device = "png", width = 5, height = )
+ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.pdf", device = "pdf", width = 5, height = )

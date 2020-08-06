@@ -32,7 +32,7 @@ library('tidyverse')
 ##### PHOTOSYNTHESIS AND RESPIRATION #####
 
 # get the file path
-setwd("~/Desktop/Thesis/LandBasedPollution_Moorea/October_2019/PI_curve/")
+setwd("PI_curve/")
 path.p<-"../PI_curve/Data/PI_curve_resp" #the location of all your respirometry files 
 
 # bring in the oxygen files
@@ -96,7 +96,7 @@ for(i in 1:length(file.names.full)) { # for every file in list calculate O2 upta
     #Save plot prior to and after data thinning to make sure thinning is not too extreme
     rename <- sub(".csv","", file.names[i]) # remove all the extra stuff in the file name
      
-    pdf(paste0("~/Desktop/Thesis/LandBasedPollution_Moorea/October_2019/PI_curve/Output/",rename,"thinning.pdf")) # open the graphics device
+    pdf(paste0("Output/",rename,"thinning.pdf")) # open the graphics device
     
     par(omi=rep(0.3, 4)) #set size of the outer margins in inches
     par(mfrow=c(1,2)) #set number of rows and columns in multi plot graphic
@@ -142,7 +142,7 @@ for(i in 1:length(file.names.full)) { # for every file in list calculate O2 upta
     
     # rewrite the file everytime... I know this is slow, but it will save the data that is already run
 }
-write.csv(Photo.R, '~/Desktop/Thesis/LandBasedPollution_Moorea/October_2019/PI_curve/Output/Photo.R.csv')  
+write.csv(Photo.R, 'Output/Photo.R.csv')  
 View(Photo.R)
 
 # Calculate P and R rate
@@ -229,7 +229,7 @@ ggplot()+
   geom_line(data = PhotoMeans,  aes(x=run, y=rates.mean), size=1)+
   geom_errorbar(data = PhotoMeans, aes(x = run, ymin=rates.mean-se, ymax=rates.mean+se, width=.2))
   #facet_wrap(~ Species, labeller = labeller(.multi_line = FALSE))+
-  ggsave('Output/RespirationRates.png')
+  ggsave('Output/RespirationRates.pdf')
 
 #Mo'orea PI curve fit
 #pulling out numeric for everything, pull put for high and pull out for low and do a curve 
@@ -296,7 +296,7 @@ plot(PAR,Pc,xlab="",
   abline(v=Ik, col="red", lty=3, lwd = 3)
   text(x = 410, y = 1.0, label = "Ik", srt = 0)
   
-  dev.copy(png,'Output/Moorea_Oct19_PI.png', width = 5, height = 4, units = "in", res = 1200)
+  dev.copy(pdf,'Output/Moorea_Oct19_PI.pdf', width = 5, height = 4)
   dev.off()
   
   # Ic light compensation point

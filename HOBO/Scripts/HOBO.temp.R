@@ -27,8 +27,8 @@ here()
 
 #load temp data
 
-gumptank.1 <- read.csv("October_2019/HOBO/Data/tank.data/GumpTank1.csv")
-gumptank.2 <- read.csv("October_2019/HOBO/Data/tank.data/GumpTank2.csv")
+gumptank.1 <- read.csv("HOBO/Data/tank.data/GumpTank1.csv")
+gumptank.2 <- read.csv("HOBO/Data/tank.data/GumpTank2.csv")
 
 
 #bind all data sets together into one data frame
@@ -46,7 +46,7 @@ view(temp.data)
 temp.data$Date.Time <- mdy_hm(temp.data$Date.Time, quiet=FALSE, tz="UTC", truncated=0) #format date and time 
 
 #save file as csv so transforms to data frame
-write.csv(temp.data, 'October_2019/HOBO/Data/temp.data.csv') 
+write.csv(temp.data, 'HOBO/Data/temp.data.csv') 
 
 #make tank number a factor
 temp.data$tank.number = as.factor(temp.data$tank.number)
@@ -87,7 +87,7 @@ ggplot(data = temp.data, aes(x = Date.Time, y = Temp, colour = tank.number)) +
   scale_x_datetime(date_breaks = "12 hour", labels = date_format("%b %d - %H:%M")) +
   labs(x="Date - Time", y="Temperature")
 
-ggsave(filename = "October_2019/HOBO/Output/temp.graph.png", device = "png", width = 20, height = 10)
+ggsave(filename = "HOBO/Output/temp.graph.pdf", device = "pdf", width = 20, height = 10)
 
 #variances of temp data between tanks
 boxplot(ylab="Temp", xlab= "tank.number", Temp~tank.number, data=temp.data)
@@ -107,7 +107,7 @@ datasum.temp
 
 #look at forreef lter site 2 data from 2005-06/19
 
-forereef.temp <- read.csv("October_2019/HOBO/Data/FOR02_10m_temp.csv")
+forereef.temp <- read.csv("HOBO/Data/FOR02_10m_temp.csv")
 
 #look at mean temp over 
 datasum.temp <- forereef.temp %>% 
