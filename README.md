@@ -15,37 +15,25 @@ This repository includes data and analysis for the above manuscript
 **Folders:**
 
 **[Bioinformatics](Bioinformatics)**    
-Contains data, output, and script files to compose an environmental parameters correlation matrix to compare environmental trends across our varying nutrient and sedimentation gradient within north shore fringing reef sites in Mo'orea, French Polynesia.
+Contains data, output, and script files to compare the Symbiodiniaceae relative abundances in ITS2 profiles from *Pocillopora* spp. fragments at the control and nutrient-enriched treatments (n = 16) on the fore reef on the north shore of Mo'orea, French Polynesia.
 
 **[Endosymbiont_Coral_Response](Endosymbiont_Coral_Response)**          
-Contains data, output, and script files to calculate and analyze the effect of the increasing nutrient and sediment gradient residuals on each coral, endosymbiont, and holobiont metabolic response variable
+Contains data, output, and script files to calculate and analyze the effect of the chronic nutrient-enriched treatment on each coral, and endosymbiont response variable
 
 **[HOBO](HOBO)**  
 Contains data, output, and script files to create a map of Mo'orea showing detailed information on the nutrient and sediment regime at each of our sampling sites. The data is represented by the average percent nitrogen content in *Turbinaria ornata* (macroalgal species) samples and sedimentation rates at each site.
 
 **[Map](Map)**  
-Contains data, output, and script files to create a map of Mo'orea showing detailed information on the nutrient and sediment regime at each of our sampling sites. The data is represented by the average percent nitrogen content in *Turbinaria ornata* (macroalgal species) samples and sedimentation rates at each site. 
+Contains output, and script files to create a map of the north shore fore reef nutrient-enriched and control treatment sites in Mo'orea.
 
-**[PI_curve_sites1](PI_curves_sites1)**  
-Contains data, output, and script files to characterize a net photosynthesis as a function of photon flux density (commonly referred to as photosynthesis-irradiance (PI)) curve and analyze the saturating light levels for the experimental coral samples collected and sampled from sites E and F (eastern sites). Also, the output file contains a compilation plot of the three PI curves analyzed and the spectral trace of our Mars Aqua 300w LED Brand Epistar light used during experimental trials in Mo'orea.
-
-**[PI_curve_sites2](PI_curves_sites2)**  
-Contains data, output, and script files to characterize a net photosynthesis as a function of photon flux density (commonly referred to as photosynthesis-irradiance (PI)) curve and analyze the saturating light levels for the experimental coral samples collected and sampled from sites C and D (central sites). 
-
-**[PI_curve_sites3](PI_curves_sites3)**  
-Contains data, output, and script files to characterize a net photosynthesis as a function of photon flux density (commonly referred to as photosynthesis-irradiance (PI)) curve and analyze the saturating light levels for the experimental coral samples collected and sampled from sites A and B (western sites).
-
-**[Qa_Qc_Site_Data](Qa_Qc_Site_Data)**  
-Contains a clean data file with all average and se data for endosymbiont, coral, and holobiont metabolic response variables across our 6 northshore fringing reef sites in Mo'orea.
+**[PI_curve](PI_curve)**  
+Contains data, output, and script files to characterize a net photosynthesis as a function of photon flux density (commonly referred to as photosynthesis-irradiance (PI)) curve and analyze the saturating light levels for the experimental coral samples collected and sampled at the nutrient-enriched and control treatments. 
 
 **[Respirometry](Respirometry)**  
 Contains data, output, and script files with all the raw respirometry files from the PreSens output, files for the raw output of the respirometry rates from the LoLinR package, and R script to take raw respirometry data and calculate photosynthesis and respiration rates.
 
-**[Site_Characteristics](Site_Characteristics)**  
-Contains data, output, and script files with all average and se data for biological, chemical, and physical parameters across our 6 northshore fringing reef sites in Mo'orea. Also contains plots of individual and combined parameters compared between each site and an overlayed site map and site characteristics plot.
-
-**[TPC_curves](TPC_curves)**  
-Contains data, output, and script files to characterize and analyze thermal performance curve (TPC) metrics and calculate net calcification rates. Contains all raw pH, salinity, and water volume for each sample and raw TA data and calculated net calcification rates. Also contains all the plotted TPC curves per region and by each metabolic rate process (photosynthesis, respiration, and net calcification) per coral sample.
+**[Thermal_Performance](Thermal_Performance)**  
+Contains data, output, and script files to characterize and analyze thermal performance curve (TPC) metrics. Contains all the plotted TPC curves by each treatment and by each metabolic rate process (photosynthesis and respiration) per coral sample.
 
 
 
