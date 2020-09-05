@@ -6,6 +6,7 @@ rm(list=ls())
 # load packages
 library(nls.multstart)
 library(sjPlot)
+library(lsmeans)
 library(broom)
 library(wesanderson)
 library(patchwork)
@@ -299,13 +300,13 @@ Topt_data$rate.type <- droplevels(Topt_data$rate.type)
 Topt.GP <- lmer(Topt~treatment + (1|block), data = Topt_data, subset = rate.type=="Gross Photosynthesis")
 anova(Topt.GP)
 summary(Topt.GP)
-tab_model(Topt.GP)
+
 
 #topt model for dark respiration
 Topt.R <- lmer(Topt~treatment + (1|block), data = Topt_data, subset = rate.type=="Dark Respiration")
 anova(Topt.R)
 summary(Topt.R)
-tab_model(Topt.R)
+
 
 #check for normality, use normality plots
 
@@ -319,18 +320,27 @@ qqline(resid(Topt.GP))
 
 boxplot(resid(Topt.R)~Topt_data$treatment)
 
+#extract model paramaters (means/SE) 
+Topt.R.ls <- lsmeans(Topt.R, "treatment")
+Topt.GP.ls <- lsmeans(Topt.GP, "treatment")
 
-data.summary<-Topt_data %>%
-  group_by(treatment, rate.type) %>% #tells to group by these two factors
-  summarise(mean=mean(Topt), se=sd(Topt)/sqrt(n())) #calculates mean and s.e.
-data.summary
+#make data table into a data frame
+Topt.R.dat <- as.data.frame(Topt.R.ls)
+Topt.GP.dat<- as.data.frame(Topt.GP.ls)
+
+#make another column in lsmeans data frame to distinguish between R and GP
+Topt.R.dat$rate.type  <- c("Topt.R")
+Topt.GP.dat$rate.type <- c("Topt.GP")
+
+#combine lsmeans tables for Topt values
+data.summary.Topt <- rbind(Topt.GP.dat, Topt.R.dat)
 
 #data.summary$rate.type <- factor(data.summary$rate.type, levels = c("R", "GP")) 
 
-d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
+d <- ggplot(data.summary.Topt, aes(x=treatment, y=lsmean, col = treatment)) +
   theme_bw() +
   geom_point(size=6) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
   labs(x="Treatment", y= expression(bold(paste(atop("Acute Thermal Optimum",  "(°C)"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
@@ -350,13 +360,13 @@ ggsave(filename = "Thermal_Performance/Output/Topt_graph.pdf", device = "pdf", w
 lnc.GP <- lmer(lnc~treatment + (1|block), data = Topt_data, subset = rate.type=="Gross Photosynthesis")
 anova(lnc.GP)
 summary(lnc.GP)
-tab_model(lnc.GP)
+
 
 #lnc model for dark respiration
 lnc.R <- lmer(lnc~treatment + (1|block), data = Topt_data, subset = rate.type=="Dark Respiration")
 anova(lnc.R)
 summary(lnc.R)
-tab_model(lnc.R)
+
 
 #check for normality, use normality plots
 
@@ -370,17 +380,26 @@ qqline(resid(lnc.GP))
 
 boxplot(resid(lnc.mod)~Topt_data$treatment*Topt_data$rate.type)
 
+#extract model paramaters (means/SE) 
+lnc.R.ls <- lsmeans(lnc.R, "treatment")
+lnc.GP.ls <- lsmeans(lnc.GP, "treatment")
 
-data.summary<-Topt_data %>%
-  group_by(treatment, rate.type) %>% #tells to group by these two factors
-  summarise(mean=mean(lnc), se=sd(lnc)/sqrt(n())) #calculates mean and s.e.
-data.summary
+#make data table into a data frame
+lnc.R.dat <- as.data.frame(lnc.R.ls)
+lnc.GP.dat<- as.data.frame(lnc.GP.ls)
+
+#make another column in lsmeans data frame to distinguish between R and GP
+lnc.R.dat$rate.type  <- c("lnc.R")
+lnc.GP.dat$rate.type <- c("lnc.GP")
+
+#combine lsmeans tables for Topt values
+data.summary.lnc <- rbind(lnc.GP.dat, lnc.R.dat)
 
 
-c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
+c <- ggplot(data.summary.lnc, aes(x=treatment, y=lsmean, col = treatment)) +
   theme_bw() +
   geom_point(size=6) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
   labs(x="", y=expression(bold(paste(atop("Rate at a reference temperature",  "(log " *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
@@ -415,13 +434,13 @@ Pmax_data$rate.type <- droplevels(Pmax_data$rate.type)
 Pmax.GP <- lmer(Pmax~treatment + (1|block), data = Pmax_data, subset = rate.type=="Gross Photosynthesis")
 anova(Pmax.GP)
 summary(Pmax.GP)
-tab_model(Pmax.GP)
+
 
 #pmax model for dark respiration
 Pmax.R <- lmer(Pmax~treatment + (1|block), data = Pmax_data, subset = rate.type=="Dark Respiration")
 anova(Pmax.R)
 summary(Pmax.R)
-tab_model(Pmax.R)
+
 
 #check for normality, use normality plots
 
@@ -432,16 +451,26 @@ qqline(resid(Pmax.R))
 
 #boxplot(resid(Pmax.R)~Pmax_data$treatment) 
   
+#extract model paramaters (means/SE) 
+Pmax.R.ls <- lsmeans(Pmax.R, "treatment")
+Pmax.GP.ls <- lsmeans(Pmax.GP, "treatment")
 
-data.summary<-Pmax_data %>%
-  group_by(treatment, rate.type) %>% #tells to group by these two factors
-  summarise(mean=mean(Pmax), se=sd(Pmax)/sqrt(n())) #calculates mean and s.e.
-data.summary
+#make data table into a data frame
+Pmax.R.dat <- as.data.frame(Pmax.R.ls)
+Pmax.GP.dat<- as.data.frame(Pmax.GP.ls)
 
-b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
+#make another column in lsmeans data frame to distinguish between R and GP
+Pmax.R.dat$rate.type  <- c("Pmax.R")
+Pmax.GP.dat$rate.type <- c("Pmax.GP")
+
+#combine lsmeans tables for Topt values
+data.summary.Pmax <- rbind(Pmax.GP.dat, Pmax.R.dat)
+
+
+b <- ggplot(data.summary.Pmax, aes(x=treatment, y=lsmean, col = treatment)) +
   theme_bw() +
   geom_point(size=6) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) + #makes legend elements larger
   labs(x="", y=expression(bold(paste(atop("Maximal perfromance",  "(log " *mu*"mol " *cm^-2 *hr^-1*")"))))) +
   facet_wrap(. ~ rate.type, scales = "free") +
@@ -472,7 +501,7 @@ ggsave(filename = "Thermal_Performance/Output/holo_graphs.pdf", device = "pdf", 
 
 #arrange models to make table of models results
 
-TPC_models.M2 <- tab_model(Topt.GP, Topt.R, Pmax.GP, Pmax.R,lnc.GP, lnc.R,  pred.labels = c("Intercept", "Treatment"),
+TPC_models.M2 <- tab_model(Topt.GP, Topt.R, Pmax.GP, Pmax.R,lnc.GP, lnc.R,  pred.labels = c("Intercept", "Treatment"),  p.val = "satterthwaite",
                               dv.labels = c("Topt_GP", "Topt_R", "umax_GP", "umax_R", "b(Tc)_GP", "b(Tc)_R"), string.ci = "Conf. Int (95%)", show.ci = FALSE,
                               string.p = "P-Value", file = "../../../Documents/CSUN/Thesis Defense/Tables/Topt_M2.doc")
 

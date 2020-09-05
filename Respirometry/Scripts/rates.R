@@ -2,17 +2,8 @@
 ##created by Danielle Becker 03/02/20
 ##edited by Danielle Becker 04/02/20
 
+#clear lists
 rm(list=ls())
-
-##Install packages
-if ("segmented" %in% rownames(installed.packages()) == 'FALSE') install.packages('segmented') 
-if ("plotrix" %in% rownames(installed.packages()) == 'FALSE') install.packages('plotrix') 
-if ("gridExtra" %in% rownames(installed.packages()) == 'FALSE') install.packages('gridExtra') 
-if ("LoLinR" %in% rownames(installed.packages()) == 'FALSE') install_github('colin-olito/LoLinR') 
-if ("lubridate" %in% rownames(installed.packages()) == 'FALSE') install.packages('lubridate') 
-if ("chron" %in% rownames(installed.packages()) == 'FALSE') install.packages('chron') 
-if ("plyr" %in% rownames(installed.packages()) == 'FALSE') install.packages('plyr') 
-if ("dplyr" %in% rownames(installed.packages()) == 'FALSE') install.packages('dplyr') 
 
 #Read in required libraries
 
@@ -36,7 +27,7 @@ path.p<-"../Respirometry/Data/Oct_TT" #the location of all your respirometry fil
 
 getwd()
 
-# bring in the respiration files
+# bring in the all files for on big respirometry file
 file.names<-basename(list.files(path = path.p, pattern = "csv$", recursive = TRUE)) #list all csv file names in the folder and subfolders
 #basename above removes the subdirectory name from the file
 file.names.full<-list.files(path = path.p, pattern = "csv$", recursive = TRUE) 
@@ -47,18 +38,15 @@ colnames(Photo.R) <- c("fragment.ID.full","Intercept", "umol.L.sec","Temp.C")
 View(Photo.R)
 
 #Load your respiration data file, with all the times, etc.
-Sample.Info <- read.csv(file="Data/resp_data_TT.csv", header=T) #read in sample.info data
+Sample.Info <- read.csv(file="Respirometry/Data/resp_data_TT.csv", header=T) #read in sample.info data
 view(Sample.Info)
 
 # load surface area data
-
 SA <- read.csv(file=paste0(path.p,"/../sample_info_TT.csv"), header=T) #read sample.info data
-# add 650 ml to the NAs in volume (the blanks)
-#Calculat the volume of water
+
+#change the volume of water to numeric
 as.numeric(SA$volume)
 
-#Sample.Info$Volume[which(is.na(Sample.Info$Volume))]<-620
-# add 0's for the "not blanks"
 View(SA)
 
 # joint the sample info and surface area and volume measurements
@@ -75,14 +63,14 @@ Sample.Info$stop.time <- as.POSIXct(Sample.Info$stop.time,format="%H:%M:%S", tz 
 # for every file in list calculate O2 uptake or release rate and add the data to the Photo.R dataframe
 for(i in 1:length(file.names.full)) { # for every file in list calculate O2 uptake or release rate and add the data to the Photo.R dataframe
   
-  #find the lines in sample info that have the same file name that is being brought it
+  #find the lines in sample info that have the same file name that is being brought in
   FRow<-which(Sample.Info$fragment.ID==strsplit(file.names[i],'.csv'))
   
   # read in the O2 data one by one
   Photo.Data1 <-read.csv(file.path(path.p,file.names.full[i]), skip = 1, header=T) # skips the first line
   Photo.Data1  <- Photo.Data1[,c("Time","Value","Temp")] #subset columns of interest
   Photo.Data1$Time <- as.POSIXct(Photo.Data1$Time,format="%H:%M:%S", tz = "") #convert time from character to time
-  Photo.Data1 <- na.omit(Photo.Data1)
+  Photo.Data1 <- na.omit(Photo.Data1) #omit NA from data frame
   
   
   # clean up some of the data
@@ -109,7 +97,7 @@ for(i in 1:length(file.names.full)) { # for every file in list calculate O2 upta
   axis(2, las=1) # add the y-axis
   
   # Thin the data to make the code run faster
-  Photo.Data.orig<-Photo.Data1#save original unthinned data
+  Photo.Data.orig <-Photo.Data1 #save original unthinned data
   Photo.Data1 <-  thinData(Photo.Data1 ,by=20)$newData1 #thin data by every 20 points for all the O2 values
   Photo.Data1$sec <- as.numeric(rownames(Photo.Data1 )) #maintain numeric values for time
   Photo.Data1$Temp<-NA # add a new column to fill with the thinned data
@@ -144,16 +132,17 @@ for(i in 1:length(file.names.full)) { # for every file in list calculate O2 upta
 }
 write.csv(Photo.R, 'Output/Photo.R.csv')  
 
+#read in Photo.R file so dont need to run entire for loop again
 Photo.R <- read.csv('Output/Photo.R.csv')
 
 # Calculate P and R rate
-
 Photo.R$fragment.ID.full<-Photo.R$fragment.ID
 Photo.R$fragment.ID<-NULL
 View(Photo.R)
 
 Photo.R<-left_join(Photo.R, Sample.Info)
 View(Photo.R)
+
 #Convert sample volume to mL
 Photo.R$volume <- Photo.R$volume/1000 #calculate volume
 
@@ -171,22 +160,24 @@ Photo.R$BLANK<-ifelse(Photo.R$treatment=='BLANK', 1,0)
 Photo.R$BLANK<-as.factor(Photo.R$BLANK)
 View(Photo.R)
 
+#aggregate certain columns together for easier viewing
 photo.blnk <- aggregate(umol.sec ~ species*temp.Cat*light_dark*BLANK, data=Photo.R, mean)
-# pull out only the blanks
+
+#pull out only the blanks
 #photo.blnk<-photo.blnk[photo.blnk$Species=='BK',]
 photo.blnk<-photo.blnk[photo.blnk$BLANK==1,]
 
-# remove the species column and join with the full data set
-#photo.blnk$species<-NULL
 # remove the blank column
 photo.blnk$BLANK<-NULL
 
-colnames(photo.blnk)[4]<-'blank.rate' # rename the blank rate 
+# rename the blank rate
+colnames(photo.blnk)[4]<-'blank.rate'  
+
 # join the blank data with the rest of the data
 Photo.R<-left_join(Photo.R, photo.blnk)
 View(Photo.R)
 
-# subtract the blanks######################
+# subtract the blanks
 Photo.R$umol.sec.corr<-Photo.R$umol.sec-Photo.R$blank.rate
 
 View(Photo.R)
@@ -196,15 +187,15 @@ View(Photo.R)
 #Calculate net P and R
 Photo.R$umol.cm2.hr <- (Photo.R$umol.sec.corr*3600)/Photo.R$surf.area.cm2 #mmol cm-2 hr-1
 
-#Photo.R<-Photo.R[complete.cases(Photo.R),] # remove NAs and blanks
+# remove NAs and blanks
 Photo.R<-Photo.R[Photo.R$BLANK==0,]
 
 #make respiration positive
-#Photo.R$umol.cm2.hr[Photo.R$PR=='Respiration']<-abs(Photo.R$umol.cm2.hr[Photo.R$PR=='Respiration'])
 Photo.R$umol.cm2.hr<- Photo.R$umol.cm2.hr
 
 # log the rates
 Photo.R$Rate.ln<-log(Photo.R$umol.cm2.hr+0.1)
+
 #remove empty rows
 Photo.R<-Photo.R[-which(is.na(Photo.R$fragment.ID.full)),]
 
@@ -222,11 +213,9 @@ ggplot(Photo.R, aes(x=Temp.C, y=umol.cm2.hr,group = fragment.ID, col = fragment.
   ggsave(filename = "Output/lowvshigh_curves.pdf", device = "pdf", width = 10, height = 10)
  
 write.csv(Photo.R, 'Output/TT_Rates.csv') # export all the uptake rates
+
 View(Photo.R)
 
-
-#to restart and look at original Photo.R file
-#Photo.R<-read.csv("TT_Rates.csv")
 
 ###calculating gross photosynthesis from data frame###
 

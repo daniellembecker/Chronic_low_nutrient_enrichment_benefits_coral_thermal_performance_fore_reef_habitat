@@ -7,9 +7,9 @@ rm(list=ls())
 
 #load libraries 
 library(dplyr)
+library(parameters)
 library(tidyr)
-library(RColorBrewer)
-library(ghibli)
+library(lsmeans)
 library(ggpubr)
 library(patchwork)
 library(wesanderson)
@@ -74,29 +74,23 @@ boxplot(chlA.ugcm2~treatment, data=mydata, ylab= "chlA.ugcm2")
 
 bartlett.test(chlA.ugcm2~treatment, data=mydata)
 
-#use two-sample student t-test to test ug.chla, student t-test for pooled variance t-test
-compare_means (chlA.ugcm2~treatment, data=mydata, var.equal = TRUE, method = "t.test")
-
-#p>0.05 means variances are equal, use students t test
 
 #mixed effects model with block as random factor
 chl.mod <- lmer(chlA.ugcm2~treatment + (1|block), data = mydata)
 anova(chl.mod)
-tab_model(chl.mod)
+summary(chl.mod)
 
+#extract model paramaters (means/SE) 
+chl.dat <- lsmeans(chl.mod, "treatment")
 
-#look at mean difference between treatments and total chlorophyll a content
-data.summary<-mydata %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(chlA.ugcm2), se=sd(chlA.ugcm2)/sqrt(n())) #calculates mean 
-data.summary
+#make data table into a data frame
+data.summary.chl <- as.data.frame(chl.dat)
 
-
-b <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) + 
+b <- ggplot(data.summary.chl, aes(x=treatment, y=lsmean, col=treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -129,29 +123,23 @@ boxplot(chlA.pg.cell~treatment, data=mydata, ylab= "chlA.ugcm2")
 
 bartlett.test(chlA.pg.cell~treatment, data=mydata)
 
-#use two-sample student t-test to test ug.chla, student t-test for pooled variance t-test
-compare_means (chlA.pg.cell~treatment, data=mydata, var.equal = TRUE, method = "t.test")
-
-#p>0.05 means variances are equal, use students t test
 
 #mixed effects model with block as random factor
 chl.cell.mod <- lmer(chlA.pg.cell~treatment + (1|block), data = mydata)
 anova(chl.cell.mod)
-tab_model(chl.cell.mod)
+
+#extract model paramaters (means/SE) 
+chl.cell.dat <- lsmeans(chl.cell.mod, "treatment")
+
+#make data table into a data frame
+data.summary.chl.cell <- as.data.frame(chl.cell.dat)
 
 
-#look at mean difference between treatments and total chlorophyll a content
-data.summary<-mydata %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(chlA.pg.cell), se=sd(chlA.pg.cell)/sqrt(n())) #calculates mean 
-data.summary
-
-
-c <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) + 
+c <- ggplot(data.summary.chl.cell, aes(x=treatment, y=lsmean, col=treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -161,7 +149,6 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col=treatment)) +
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.pdf", device = "pdf", width = 5, height = 5)
 
-#stat_compare_means( method = "t.test") #to remove the space between x axis and bar graphs
 
 #analysis for treatment x zoox.per.cm2 and graphs 
 #check for normality, use normality plots
@@ -187,27 +174,22 @@ ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.pdf", device =
  
  bartlett.test(zoox.per.cm2~treatment, data=mydata)
  
-#p>0.05 means variances are equal, use students t test
-#not equal variances, so use welchs 
- compare_means (zoox.per.cm2~treatment, data=mydata, na.rm=TRUE)
- 
- #mixed effects model with block as random factor 
- zoox.mod <- lmer(zoox.per.cm2~treatment + (1|block), data =mydata)
- anova(zoox.mod)
- tab_model(zoox.mod)
+#mixed effects model with block as random factor 
+zoox.mod <- lmer(zoox.per.cm2~treatment + (1|block), data =mydata)
+anova(zoox.mod)
+
+#extract model paramaters (means/SE) 
+zoox.dat <- lsmeans(zoox.mod, "treatment")
+
+#make data table into a data frame
+data.summary.zoox <- as.data.frame(zoox.dat)
 
  
-#look at mean difference between treatments and edno densities
- data.summary<-mydata %>%
-   group_by(treatment) %>% #tells to group by treatment
-   summarise(mean=mean(zoox.per.cm2), se=sd(zoox.per.cm2)/sqrt(n())) #calculates mean 
- data.summary
- 
-a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+a <- ggplot(data.summary.zoox, aes(x=treatment, y=lsmean, col = treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -263,28 +245,24 @@ boxplot(AFDW.mg.cm2.~treatment, data=AFDWdata, ylab= "AFDW")
 
 bartlett.test(AFDW.mg.cm2.~treatment, data=AFDWdata)
 
-#p>0.05 means variances are equal, use students t test
-
-#use two-sample students t-test to test AFDW, students t-test for equal variance t-test
-
-compare_means (AFDW.mg.cm2.~treatment, var.equal=TRUE, data=AFDWdata, method = "t.test")
-
 #mixed effects model with block as random factor 
 AFDW.mod <- lmer(AFDW.mg.cm2.~treatment + (1|block), data = AFDWdata)
 anova(AFDW.mod)
-tab_model(AFDW.mod)
+summary(AFDW.mod)
 
-#look at mean difference between treatments and tissue biomass
-data.summary<-AFDWdata %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(AFDW.mg.cm2.), se=sd(AFDW.mg.cm2.)/sqrt(n())) #calculates mean 
-data.summary
 
-d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+#extract model paramaters (means/SE) 
+AFDW.dat <- lsmeans(AFDW.mod, "treatment")
+
+#make data table into a data frame
+data.summary.AFDW <- as.data.frame(AFDW.dat)
+
+
+d <- ggplot(data.summary.AFDW, aes(x=treatment, y=lsmean, col = treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -344,17 +322,11 @@ boxplot(N~sample.type, data=mydata2, ylab= "N")
 
 bartlett.test(N~sample.type, data=mydata2)
 
-#p>0.05 means variances are equal, use students t test
 
 #rename AT and ST in sample type column in data sheet 
 mydata2 <- mydata2 %>% 
   mutate(sample.type = recode(sample.type, "AT='Coral Tissue'; ST='Algal Endosymbiont'"))
 
-#p>0.05 means variances are equal, use students t test
-
-#use two-sample student t-test to test total zoox, student t-test for pooled variance t-test
-
-compare_means (N~sample.type, var.equal=TRUE, data = mydata2, method = "t.test")
 
 #mixed effects model with block as random factor
 tissue.mod <- lmer(N~sample.type + (1|block), data = mydata2)
@@ -399,23 +371,24 @@ SummaryByGroup <- mydata2.ST %>%
   summarize(variance=var(pgN.cell, na.rm=TRUE))
 SummaryByGroup
 
-#look at mean difference between ST pgn/cell content
-data.summary<-mydata2.ST %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(pgN.cell), se=sd(pgN.cell)/sqrt(n())) #calculates mean 
-data.summary
 
 #mixed effects model with block as random factor
 pgN.mod <- lmer(pgN.cell~treatment + (1|block), data = mydata2.ST)
 anova(pgN.mod)
-tab_model(pgN.mod)
+
+#extract model paramaters (means/SE) 
+pgN.dat <- lsmeans(pgN.mod, "treatment")
+
+#make data table into a data frame
+data.summary.pgN <- as.data.frame(pgN.dat)
+
 
 #plot pg/cell between treatments
-e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+e <- ggplot(data.summary.pgN, aes(x=treatment, y=lsmean, col = treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -436,21 +409,20 @@ SummaryByGroup
 #mixed effects model with block as random factor
 N.ST.mod <- lmer(N~treatment + (1|block), data = mydata2.ST)
 anova(N.ST.mod)
-tab_model(N.ST.mod)
 
+#extract model paramaters (means/SE) 
+N.ST.dat <- lsmeans(N.ST.mod, "treatment")
 
-#look at mean difference between ST % N content
-data.summary<-mydata2.ST %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(N), se=sd(N)/sqrt(n())) #calculates mean 
-data.summary
+#make data table into a data frame
+data.summary.N.ST<- as.data.frame(N.ST.dat)
+
 
 #plot pg/cell between treatments
-f <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+f <- ggplot(data.summary.N.ST, aes(x=treatment, y=lsmean, col = treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -474,21 +446,19 @@ SummaryByGroup
 #mixed effects model with block as random factor
 N.AT.mod <- lmer(N~treatment + (1|block), data = mydata2.AT)
 anova(N.AT.mod)
-tab_model(N.AT.mod)
 
+#extract model paramaters (means/SE) 
+N.AT.dat <- lsmeans(N.AT.mod, "treatment")
 
-#look at mean difference between AT % N content
-data.summary<-mydata2.AT %>%
-  group_by(treatment) %>% #tells to group by treatment
-  summarise(mean=mean(N), se=sd(N)/sqrt(n())) #calculates mean 
-data.summary
+#make data table into a data frame
+data.summary.N.AT <- as.data.frame(N.AT.dat)
 
 #plot % N AT between treatments
-g <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+g <- ggplot(data.summary.N.AT, aes(x=treatment, y=lsmean, col = treatment)) + 
   geom_point(size = 6) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
   theme(legend.text=element_text(size=rel(1))) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
@@ -511,65 +481,12 @@ ggsave(filename = "Endosymbiont_Coral_Response/Output/physio_graphs.pdf", device
 
 
 #arrange models to make table of models results 
-endo_coral_M2 <- tab_model(chl.mod, chl.cell.mod, zoox.mod,  pgN.mod, N.ST.mod, N.AT.mod, AFDW.mod, pred.labels = c("Intercept", "Treatment"), show.ci = FALSE,
+endo_coral_M2 <- tab_model(chl.mod, chl.cell.mod, zoox.mod,  pgN.mod, N.ST.mod, N.AT.mod, AFDW.mod, pred.labels = c("Intercept", "Treatment"), show.ci = FALSE,  p.val = "satterthwaite",
                               dv.labels = c("Chlorophyll Content", "Chlorophyll Content per Cell", "Endosymbiont Densities", "Endosymbiont N Content per Cell", "Endosymbiont % N Content", "Coral % N Content", "Tissue Biomass"), string.ci = "Conf. Int (95%)",
                               string.p = "P-Value", file = "../../../Documents/CSUN/Thesis Defense/Tables/M2.endo.coral.doc")
 
 
 
 
-ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
-  geom_point(size = 6) +
-  scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
-  theme(legend.text=element_text(size=rel(1))) +
-  labs(fill = "Treatment") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold("Endosymbiont Density (" *x*"10"^"6" *~cells *~ cm^"-2"*")"))) + #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")
 
-ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.pdf", device = "pdf", width = 5, height = 7)
 
-ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
-  geom_point(size = 6) +
-  scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
-  theme(legend.text=element_text(size=rel(1))) +
-  labs(fill = "Treatment") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold("Total Chlorophyll Content ("*mu*g *~ cm^"-2"*")")))  + #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")  
-
-ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.pdf", device = "pdf", width = 5, height = 7)
-
-ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
-  geom_point(size = 6) +
-  scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
-  theme(legend.text=element_text(size=rel(1))) +
-  labs(fill = "Treatment") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=30), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold("Tissue Biomass (mg "*cm^"-2"*")")))  +  #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")
-
-ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.pdf", device = "pdf", width = 5, height = 7)
-
-ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
-  geom_point(size = 6) +
-  scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.title = element_blank()) +
-  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
-  theme(legend.text=element_text(size=rel(1))) +
-  labs(fill = "Treatment") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  theme(axis.text.x=element_text(face="bold", color="black", size=24), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=24), axis.title.y = element_text(face="bold", color="black", size=21),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold(paste("Endosymbiont Nitrogen Content (pg N"*~ cell^"-1"*")")))) +
-  theme(legend.position = "none") 
-
-ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.pdf", device = "pdf", width = 5, height = )
