@@ -6,7 +6,7 @@ This repository includes data and analysis for the above manuscript
 
 **Journal:** Coral Reefs
 
-**Link:** Submitting August 2020
+**Link:** In revision March 2021
 
 **Funding:** This research was funded in part by California State University, Northridge (CSUN) to NJS, U.S. National Science Foundation OCE#19-24281 to NJS and Emerging Frontiers 1921465 to HMP, CSUN Office of Graduate Studies, Department of Biology, Associated Students, College of Sciences and Mathematics, and Research and Graduate Studies to DMB, and the National Science Foundation 2019 Graduate Research Fellowship to DMB. Funds to conduct the enrichment study were also provided by National Science Foundation Biological Oceanography Grants # 1442306 and #1635913 to RVT and 1547952 to DEB. Material are also supported by the U.S. National Science Foundation under Grant OCE#16-37396, as well as a generous gift from the Gordon and Betty Moore Foundation. This work represents a contribution of the Mo'orea Coral Reef (MCR) LTER Site and is CSUN Marine Biology contribution #XXX. Research was completed under permits issued by the French Polynesian Government (De´le´gation a`la Recherche) and the Haut-commissariat de la Re´publique en Polyne´sie Francaise (DTRT) (Protocole d’Accueil 2005-2019).
 
@@ -28,6 +28,9 @@ Contains output, and script files to create a map of the north shore fore reef n
 
 **[PI_curve](PI_curve)**  
 Contains data, output, and script files to characterize a net photosynthesis as a function of photon flux density (commonly referred to as photosynthesis-irradiance (PI)) curve and analyze the saturating light levels for the experimental coral samples collected and sampled at the nutrient-enriched and control treatments. 
+
+**[Respirometry Chlorophyll](Resp.chlorophyll)**  
+Contains data, output, and script files with all the raw respirometry files from the PreSens output, files for the raw output of the respirometry rates from the LoLinR package, and R script to take raw respirometry data and calculate photosynthesis and respiration rates on a per chlorophyll basis (was done for revisions to manuscript).
 
 **[Respirometry](Respirometry)**  
 Contains data, output, and script files with all the raw respirometry files from the PreSens output, files for the raw output of the respirometry rates from the LoLinR package, and R script to take raw respirometry data and calculate photosynthesis and respiration rates.
