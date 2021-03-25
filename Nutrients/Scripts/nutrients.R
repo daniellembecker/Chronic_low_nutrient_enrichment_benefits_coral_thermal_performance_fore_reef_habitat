@@ -1,6 +1,6 @@
 #Code to compare nutrients October 2019
 ##created by Danielle Becker 03/02/20
-##edited by Danielle Becker 04/02/20
+##edited by Danielle Becker 03/19/21
 
 
 #clear list 
@@ -74,6 +74,7 @@ bartlett.test(N~treatment, data=mydata)
 data.summary<-mydata %>%
   group_by(treatment) %>% #tells to group by treatment
   summarise(mean=mean(N), se=sd(N)/sqrt(n())) #calculates mean 
+
 data.summary
 
 #use two-sample student t-test to test 
@@ -85,11 +86,12 @@ a <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold("% Nitrogen Content"))) +
+  xlab("") + ylab(expression(atop(bolditalic("Lobophora"~bold("N Content")), bold("(% of Dry Weight)")))) +
   scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.position = "none") 
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
-ggsave(filename = "Nutrients/Output/N.boxplot.pdf", device = "pdf", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.boxplot.pdf", device = "pdf", width = 5, height = 6)
 
 ###########################################################################
 #water column nutrient data for just the in situ sites, not tanks
@@ -177,12 +179,13 @@ b <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Nitrate~(NO["3"]^~~{"-"})~+~Nitrite~(NO["2"]^~~{"-"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold(atop("Nitrate [NO"["3"]^~~"-"~"]"~+~"Nitrite [NO"["2"]^~~"-"~"]", (mu*mol~L^{-1}))))) +
   scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.position = "none") 
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 
-ggsave(filename = "Nutrients/Output/N.N.boxplot.pdf", device = "pdf", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/N.N.boxplot.pdf", device = "pdf", width = 5, height = 6)
 
 #check variance and make plot for P comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -210,12 +213,13 @@ c <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Phosphate~(PO["4"]^~~{"3-"})~(mu*mol~L^{-1}))))  +
+  xlab("") + ylab(expression(bold(atop("Phosphate [PO"["4"]^~~"3-"~"]", (mu*mol~L^{-1})))))  +
   scale_color_manual(values = wes_palette("Royal1")) +
-  theme(legend.position = "none") 
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 
-ggsave(filename = "Nutrients/Output/P.boxplot.pdf", device = "pdf", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/P.boxplot.pdf", device = "pdf", width = 5, height = 6)
 
 #check variance and make plot for NH4 comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
@@ -243,14 +247,14 @@ d <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold(atop("Ammonium [NH"["4"]^~~"+"~"]", (mu*mol~L^{-1}))))) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
 
-ggsave(filename = "Nutrients/Output/NH4.boxplot.pdf", device = "pdf", width = 10, height = 12)
+ggsave(filename = "Nutrients/Output/NH4.boxplot.pdf", device = "pdf", width = 5, height = 6)
 
-#check variance and make plot for NH4 comparisons
+#check variance and make plot for DIN:DIP comparisons
 SummaryByGroup <- watercol.dat.insitu %>%
   group_by(treatment) %>%
   summarize(variance=var(DIN.DIP, na.rm=TRUE))
@@ -276,11 +280,45 @@ e <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=26), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold("DIN:DIP"))) +
+  xlab("") + ylab(expression(bold("DIN:DIP"))) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none")
 
-ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.pdf", device = "pdf", width = 10, height = 13)
+ggsave(filename = "Nutrients/Output/DIN:DIP.boxplot.pdf", device = "pdf", width = 5, height = 6)
+
+
+#check variance and make plot for NH4 comparisons
+SummaryByGroup <- mydata %>%
+  group_by(treatment) %>%
+  summarize(variance=var(C.N, na.rm=TRUE))
+SummaryByGroup
+
+data.summary<- mydata %>%
+  group_by(treatment) %>% #tells to group by treatment
+  summarise(mean=mean(C.N), se=sd(C.N)/sqrt(n())) #calculates mean 
+data.summary
+
+boxplot(C.N~treatment, data=mydata, ylab= "C:N")
+
+bartlett.test(C.N~treatment, data=mydata)
+
+#p>0.05 means variances are equal, use students t test
+
+#use two-sample student t-test to test 
+
+compare_means (C.N~treatment, data = mydata, method = "t.test")
+
+f <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) + 
+  geom_point(size=6) +  
+  geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
+  xlab("") + ylab(expression(bolditalic("Lobophora")~bold("C:N"))) +
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
+
+ggsave(filename = "Nutrients/Output/C:N.boxplot.pdf", device = "pdf", width = 5, height = 6)
 
 
 ##################################################################################
@@ -315,10 +353,9 @@ x <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Nitrate~(NO["3"]^~~{"-"})~+~Nitrite~(NO["2"]^~~{"-"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold("Nitrate [NO"["3"]^~~"-"~"]"~+~"Nitrite [NO"["2"]^~~"-"~"]"~(mu*mol~L^{-1})))) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
-
 
 ggsave(filename = "Nutrients/Output/N.N.tanks.pdf", device = "pdf", width = 10, height = 12)
 
@@ -348,7 +385,7 @@ y <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Phosphate~(PO["4"]^~~{"3-"})~(mu*mol~L^{-1}))))  +
+  xlab("") + ylab(expression(bold("Phosphate [PO"["4"]^~~"3-"~"]"~(mu*mol~L^{-1}))))  +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
@@ -381,7 +418,7 @@ z <- ggplot(data.summary, aes(x=treatment, y=mean, col = treatment)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold("Ammonium [NH"["4"]^~~"+"~"]"~(mu*mol~L^{-1})))) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme(legend.position = "none") 
 
@@ -440,15 +477,15 @@ ggsave(filename = "Nutrients/Output/tank_nutrient_graphs.pdf", device = "pdf", w
 #make plots for all nutrients on fore reef sites
 #make plots for all nutrients in tank conditions
 
-figure <- a + b + c + d + e  +         #patchwork to combine plots
-  plot_annotation(tag_levels = 'A') &         #label each individual plot with letters A-G
-  theme(plot.tag = element_text(size = 20, face = "bold"))   #edit the lettered text
+figure <- (a | f) / (b | c) / (d | e) +        #patchwork to combine plots
+  plot_annotation(tag_levels = 'A') & plot_annotation(title = 'Macroalgal Samples') &       #label each individual plot with letters A-G
+  theme(plot.tag = element_text(size = 20, face = "bold"), title = element_text(size = 20, face = "bold"))   #edit the lettered text
 
 
 figure
 
 
-ggsave(filename = "Nutrients/Output/nutrient_graphs.pdf", device = "pdf", width = 15, height = 13)
+ggsave(filename = "Nutrients/Output/nutrient_graphs.pdf", device = "pdf", width = 12, height = 15)
 
 ###########################################################################################################
 #compare enriched tank to enriched water column nutrients
@@ -467,7 +504,7 @@ ggplot(data.summary, aes(x=treatment, y=mean, color = condition)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Nitrate~(NO["3"]^~~{"-"})~+~Nitrite~(NO["2"]^~~{"-"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold("Nitrate [NO"["3"]^~~"-"~"]"~+~"Nitrite [NO"["2"]^~~"-"~"]"~(mu*mol~L^{-1})))) +
   theme(legend.position = "none") 
 
 data.summary<-reef.tank.conditions %>%
@@ -490,7 +527,7 @@ ggplot(data.summary, aes(x=treatment, y=mean, color = condition)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Ammonium~(NH["4"]^~~{"+"})~(mu*mol~L^{-1})))) +
+  xlab("") + ylab(expression(bold("Ammonium [NH"["4"]^~~"+"~"]"~(mu*mol~L^{-1})))) +
   theme(legend.position = "none") 
 
 data.summary<-reef.tank.conditions %>%
@@ -513,7 +550,7 @@ ggplot(data.summary, aes(x=treatment, y=mean)) +
   geom_errorbar(aes(ymax=mean+se, ymin=mean-se), position=position_dodge(width=0.9), width=0.1) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=20), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=22), axis.title.y = element_text(face="bold", color="black", size=22),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(Phosphate~(PO["4"]^~~{"3-"})~(mu*mol~L^{-1}))))  +
+  xlab("") + ylab(expression(bold("Phosphate [PO"["4"]^~~"3-"~"]"~(mu*mol~L^{-1}))))  +
   theme(legend.position = "none") 
 
 

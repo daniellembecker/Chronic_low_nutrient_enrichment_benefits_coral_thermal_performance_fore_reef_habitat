@@ -26,7 +26,7 @@ here()
 
 #load data
 
-mydata <- read.csv("Thermal_Performance/Data/Photo.T.csv")
+mydata <- read.csv("../Thermal_Performance/Data/Photo.T.csv")
 mydata$X <- NULL
 View(mydata)
 glimpse(mydata)
@@ -115,11 +115,11 @@ params <- fits %>%
 
 
 #left join params with meta data file to have treatment in data frame
-metadata <- read.csv(file="Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
+metadata <- read.csv(file="../Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
 params <- left_join(params, metadata)
 
 #left join params with meta data file to have block in file
-metadata <- read.csv(file="Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
+metadata <- read.csv(file="../Thermal_Performance/Data/metadata.csv", header=T) #read in metadata file to add site block and recovery block
 params <- left_join(params, metadata)
 
 # get confidence intervals
@@ -183,7 +183,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "Thermal_Performance/Output/respindiv.curves.pdf", device = "pdf", width = 10, height = 10)
+  ggsave(filename = "../Thermal_Performance/Output/respindiv.curves.pdf", device = "pdf", width = 10, height = 10)
   
 #want to do ggplot where we look at individual curves for photosynthesis rates of each fragment
   mydataGP <- mydata %>%
@@ -205,7 +205,7 @@ preds2 <- left_join(preds2, metadata)
     labs(color = "Rate Type")  +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
   
-  ggsave(filename = "Thermal_Performance/Output/photoindiv.curves.pdf", device = "pdf", width = 10, height = 10)
+  ggsave(filename = "../Thermal_Performance/Output/photoindiv.curves.pdf", device = "pdf", width = 10, height = 10)
 
 
   
@@ -220,7 +220,7 @@ a <- ggplot() +
   geom_line(aes(K - 273.15, ln.rate, col = treatment, group = fragment.ID), alpha = 0.5, preds2) +
   scale_color_manual(values = wes_palette("Royal1")) +
   theme_bw(base_size = 12, base_family = 'Helvetica') +
-  ylab(expression(bold("Rate (log " *mu*"mol " *cm^-2 *hr^-1*")"))) +
+  ylab(expression(bold("Rate [Log (" *mu*"mol " *cm^-2 *hr^-1*")]"))) +
   xlab('Temperature (ºC)') +
   facet_grid(~ rate.type) + #rename facet wrap headings
   theme(strip.text.x = element_text(size=18, face = "bold")) +
@@ -230,7 +230,7 @@ a <- ggplot() +
   labs(col = "Treatment") 
 
 
-ggsave(filename = "Thermal_Performance/Output/TPCcurves.pdf", device = "pdf")
+ggsave(filename = "../Thermal_Performance/Output/TPCcurves.pdf", device = "pdf")
 
 
 #want to do ggplot where we look at one single set of curves
@@ -268,7 +268,7 @@ ggplot() +
   labs(col = "Rate Type") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black")) 
 
-ggsave(filename = "Thermal_Performance/Output/singlecurve.CSUN.pdf", device = "pdf", width = 6, height = 5)
+ggsave(filename = "../Thermal_Performance/Output/singlecurve.CSUN.pdf", device = "pdf", width = 6, height = 5)
 
 
 # function for calculating Topt
@@ -283,7 +283,7 @@ Topt_data <- params %>%
   spread(term, estimate) %>%
   mutate(Topt = get_topt(E, Th, Eh)) 
 
-write.csv(Topt_data, 'Thermal_Performance/Data/Topt_data.csv') 
+write.csv(Topt_data, '../Thermal_Performance/Data/Topt_data.csv') 
 
 #chnage control and enriched names
 Topt_data <- Topt_data %>% 
@@ -352,7 +352,7 @@ d <- ggplot(data.summary.Topt, aes(x=treatment, y=lsmean, col = treatment)) +
  
 
  
-ggsave(filename = "Thermal_Performance/Output/Topt_graph.pdf", device = "pdf", width = 8, height = 5)
+ggsave(filename = "../Thermal_Performance/Output/Topt_graph.pdf", device = "pdf", width = 8, height = 5)
 
 
 
@@ -414,7 +414,7 @@ c <- ggplot(data.summary.lnc, aes(x=treatment, y=lsmean, col = treatment)) +
   theme(strip.text.x = element_blank())
 
 
-ggsave(filename = "Thermal_Performance/Output/lnc_graph.pdf", device = "pdf", width = 8, height = 7)
+ggsave(filename = "../Thermal_Performance/Output/lnc_graph.pdf", device = "pdf", width = 8, height = 7)
     
 
 #calculate Pmax values between sites
@@ -425,7 +425,7 @@ Pmax_data <- Topt_data %>%
   mutate(Pmax = schoolfield_high(lnc = lnc, E = E, Th = Th, Eh = Eh, temp = Topt + 273.15, Tc = 26)) %>% #add in factors that make up schoolfield function, reference topt to get pmax
   group_by(., rate.type, treatment, fragment.ID)
 
-write.csv(Pmax_data, 'Thermal_Performance/Data/Pmax_data.csv') # export all the uptake rates
+write.csv(Pmax_data, '../Thermal_Performance/Data/Pmax_data.csv') # export all the uptake rates
 
 #drop NP
 Pmax_data$rate.type <- droplevels(Pmax_data$rate.type)
@@ -485,7 +485,7 @@ b <- ggplot(data.summary.Pmax, aes(x=treatment, y=lsmean, col = treatment)) +
   theme(strip.text.x = element_blank()) 
 
 
-ggsave(filename = "Thermal_Performance/Output/Pmax_graph.pdf", device = "pdf", width = 8, height = 6)
+ggsave(filename = "../Thermal_Performance/Output/Pmax_graph.pdf", device = "pdf", width = 8, height = 6)
 
 
 figure <- a / b / c / d           #patchwork to combine plots
@@ -496,7 +496,7 @@ figure <- a / b / c / d           #patchwork to combine plots
 
 figure
 
-ggsave(filename = "Thermal_Performance/Output/holo_graphs.pdf", device = "pdf", width = 10, height = 20)
+ggsave(filename = "../Thermal_Performance/Output/holo_graphs.pdf", device = "pdf", width = 10, height = 20)
 
 
 #arrange models to make table of models results

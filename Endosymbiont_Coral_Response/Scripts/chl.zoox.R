@@ -7,6 +7,7 @@ rm(list=ls())
 
 #load libraries 
 library(dplyr)
+library(cowplot)
 library(parameters)
 library(tidyr)
 library(lsmeans)
@@ -96,7 +97,8 @@ b <- ggplot(data.summary.chl, aes(x=treatment, y=lsmean, col=treatment)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(paste(atop("Total Chlorophyll Content", "("*mu*g *~ cm^"-2"*")")))))  + #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")  
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.pdf", device = "pdf", width = 5, height = 5)
  
@@ -145,7 +147,8 @@ c <- ggplot(data.summary.chl.cell, aes(x=treatment, y=lsmean, col=treatment)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(paste(atop("Chlorophyll Content per Cell", "(" *pg*~ cell^"-1"*")")))))  + #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/chloro.cell.pdf", device = "pdf", width = 5, height = 5)
 
@@ -195,7 +198,8 @@ a <- ggplot(data.summary.zoox, aes(x=treatment, y=lsmean, col = treatment)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
   xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Density", "(" *x*"10"^"6" *~cells *~ cm^"-2"*")"))))) + #using quotations over numbers allow them to be bold
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/zoox.pdf", device = "pdf", width = 5, height = 6)
 
@@ -267,7 +271,7 @@ d <- ggplot(data.summary.AFDW, aes(x=treatment, y=lsmean, col = treatment)) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=30), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("Treatment") + ylab(expression(bold(paste(atop("Tissue Biomass", "(mg "*cm^"-2"*")"))))) +  #using quotations over numbers allow them to be bold
+  xlab("") + ylab(expression(bold(paste(atop("Coral Tissue Biomass", "(mg "*cm^"-2"*")"))))) +  #using quotations over numbers allow them to be bold
   theme(legend.position = "none")
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/biomass.pdf", device = "pdf", width = 5, height = 5)
@@ -393,8 +397,9 @@ e <- ggplot(data.summary.pgN, aes(x=treatment, y=lsmean, col = treatment)) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(paste(atop("Endosymbiont Nitrogen Content", "(pg N"*~ cell^"-1"*")"))))) +
-  theme(legend.position = "none") 
+  xlab("") + ylab(expression(bold(paste(atop("Endosymbiont N Content", "(pg N"*~ cell^"-1"*")"))))) +
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.pgN.pdf", device = "pdf", width = 5, height = 6)
 
@@ -427,8 +432,9 @@ f <- ggplot(data.summary.N.ST, aes(x=treatment, y=lsmean, col = treatment)) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=18), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(paste(atop("Total Endosymbiont", "% Nitrogen Content"))))) +
-  theme(legend.position = "none") 
+  xlab("") + ylab(expression(bold(paste(atop("Endosymbiont N Content", "(% of Dry Weight)"))))) +
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.ST.percentN.pdf", device = "pdf", width = 10, height = 10)
 
@@ -463,16 +469,94 @@ g <- ggplot(data.summary.N.AT, aes(x=treatment, y=lsmean, col = treatment)) +
   labs(fill = "Treatment") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=18), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
-  xlab("") + ylab(expression(bold(paste(atop("Coral Tissue", "% Nitrogen Content"))))) +
+  xlab("") + ylab(expression(bold(paste(atop("Coral Tissue N Content", "(% of Dry Weight)"))))) +
   theme(legend.position = "none") 
 
 ggsave(filename = "Endosymbiont_Coral_Response/Output/tissue.n.content.AT.percentN.pdf", device = "pdf", width = 10, height = 10)
 
+#filter just AT values to compare coral tissue C:N
+mydata2.AT <- mydata2 %>%
+  filter(sample.type == "Coral Tissue")
+
+#check variance
+
+SummaryByGroup <- mydata2.AT %>%
+  group_by(treatment) %>%
+  summarize(variance=var(C.N, na.rm=TRUE))
+SummaryByGroup
+
+#mixed effects model with block as random factor
+C.N.AT.mod <- lmer(C.N~treatment + (1|block), data = mydata2.AT)
+anova(C.N.AT.mod)
+
+#extract model paramaters (means/SE) 
+C.N.AT.dat <- lsmeans(C.N.AT.mod, "treatment")
+
+#make data table into a data frame
+data.summary.C.N.AT <- as.data.frame(C.N.AT.dat)
+
+#plot % N AT between treatments
+h <- ggplot(data.summary.C.N.AT, aes(x=treatment, y=lsmean, col = treatment)) + 
+  geom_point(size = 6) +
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.title = element_blank()) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
+  theme(legend.text=element_text(size=rel(1))) +
+  labs(fill = "Treatment") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=18), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
+  xlab("") + ylab(expression(bold(paste("Coral Tissue C:N")))) +
+  theme(legend.position = "none") 
+
+ggsave(filename = "Endosymbiont_Coral_Response/Output/C.N.AT.pdf", device = "pdf", width = 10, height = 10)
+
+
+#filter just ST values to compare coral tissue C:N
+mydata2.ST <- mydata2 %>%
+  filter(sample.type == "Algal Endosymbiont")
+
+#check variance
+
+SummaryByGroup <- mydata2.ST %>%
+  group_by(treatment) %>%
+  summarize(variance=var(C.N, na.rm=TRUE))
+SummaryByGroup
+
+
+#mixed effects model with block as random factor
+C.N.ST.mod <- lmer(C.N~treatment + (1|block), data = mydata2.ST)
+anova(C.N.ST.mod)
+
+#extract model paramaters (means/SE) 
+C.N.ST.dat <- lsmeans(C.N.ST.mod, "treatment")
+
+#make data table into a data frame
+data.summary.C.N.ST <- as.data.frame(C.N.ST.dat)
+
+
+#plot pg/cell between treatments
+i <- ggplot(data.summary.C.N.ST, aes(x=treatment, y=lsmean, col = treatment)) + 
+  geom_point(size = 6) +
+  scale_color_manual(values = wes_palette("Royal1")) +
+  theme(legend.title = element_blank()) +
+  geom_errorbar(aes(ymax=lsmean+SE, ymin=lsmean-SE), position=position_dodge(width=0.9), width=0.1) +
+  theme(legend.text=element_text(size=rel(1))) +
+  labs(fill = "Treatment") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(axis.text.x=element_text(face="bold", color="black", size=26), axis.text.y=element_text(face="bold", color="black", size=20), axis.title.x = element_text(face="bold", color="black", size=28), axis.title.y = element_text(face="bold", color="black", size=24),panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + #adjust themes for chart x and y axis labels and axis tick mark labels
+  xlab("") + ylab(expression(bold(paste("Endosymbiont C:N")))) +
+  theme(legend.position = "none", axis.text.x=element_blank(),  axis.title.x = element_blank()) +
+  theme(strip.text.x = element_blank())
+
+ggsave(filename = "Endosymbiont_Coral_Response/Output/C.N.ST.pdf", device = "pdf", width = 5, height = 6)
+
+
 #use patchwork to organize figure
 
-figure <- a + b + c + e + f + g + d  +           #patchwork to combine plots
-    plot_annotation(tag_levels = 'A') &         #label each individual plot with letters A-G
-    theme(plot.tag = element_text(size = 20, face = "bold"))   #edit the lettered text
+figure <- (a | b | c) / (e | f | i) /
+  (g | d | h) +           #patchwork to combine plots
+    plot_annotation(tag_levels = 'A')  & plot_annotation(title = 'Endosymbiont Response Variables') &   #label each individual plot with letters A-G
+    theme(plot.tag = element_text(size = 20, face = "bold"), title = element_text(size = 20, face = "bold"))   #edit the lettered text
 
 
 figure
@@ -485,6 +569,10 @@ endo_coral_M2 <- tab_model(chl.mod, chl.cell.mod, zoox.mod,  pgN.mod, N.ST.mod, 
                               dv.labels = c("Chlorophyll Content", "Chlorophyll Content per Cell", "Endosymbiont Densities", "Endosymbiont N Content per Cell", "Endosymbiont % N Content", "Coral % N Content", "Tissue Biomass"), string.ci = "Conf. Int (95%)",
                               string.p = "P-Value", file = "../../../Documents/CSUN/Thesis Defense/Tables/M2.endo.coral.doc")
 
+
+endo_coral_M2_table_2 <- tab_model(C.N.AT.mod, C.N.ST.mod, pred.labels = c("Intercept", "Treatment"), show.ci = FALSE,  p.val = "satterthwaite",
+                           dv.labels = c("Coral Tissue Carbon:Nitrogen Ratio", "Endosymbiont Carbon:Nitrogen Ratio"), string.ci = "Conf. Int (95%)",
+                           string.p = "P-Value", file = "../../../Documents/CSUN/Thesis Defense/Tables/M2.endo.coral.table2.doc")
 
 
 

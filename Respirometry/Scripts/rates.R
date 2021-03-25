@@ -22,7 +22,7 @@ library('tidyverse')
 
 
 # get the file path
-setwd("../Respirometry/")
+setwd("Respirometry/")
 path.p<-"../Respirometry/Data/Oct_TT" #the location of all your respirometry files
 
 getwd()
@@ -38,7 +38,7 @@ colnames(Photo.R) <- c("fragment.ID.full","Intercept", "umol.L.sec","Temp.C")
 View(Photo.R)
 
 #Load your respiration data file, with all the times, etc.
-Sample.Info <- read.csv(file="Respirometry/Data/resp_data_TT.csv", header=T) #read in sample.info data
+Sample.Info <- read.csv(file="Data/resp_data_TT.csv", header=T) #read in sample.info data
 view(Sample.Info)
 
 # load surface area data
