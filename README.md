@@ -1,3 +1,5 @@
+*[![DOI](https://zenodo.org/badge/276498035.svg)](https://zenodo.org/badge/latestdoi/276498035)*
+
 # Chronic low-level nutrient enrichment benefits coral thermal performance in a fore reef habitat.
 
 This repository includes data and analysis for the above manuscript
