@@ -6,7 +6,9 @@ This repository includes data and analysis for the above manuscript
 
 **Journal:** Coral Reefs
 
-**Link:** In revision March 2021
+**Link:**  [https://link.springer.com/article/10.1007/s00338-021-02138-2](https://link.springer.com/article/10.1007/s00338-021-02138-2)
+
+Becker, D.M., Putnam, H.M., Burkepile, D.E., Adam, T.C., Vega Thurber, R., and Silbiger, N.J. Chronic low-level nutrient enrichment benefits coral thermal performance in a fore reef habitat. Coral Reefs (2021). [https://doi.org/10.1007/s00338-021-02138-2](https://link.springer.com/article/10.1007/s00338-021-02138-2)
 
 **Funding:** This research was funded in part by California State University, Northridge (CSUN) to NJS, U.S. National Science Foundation OCE#19-24281 to NJS and Emerging Frontiers 1921465 to HMP, CSUN Office of Graduate Studies, Department of Biology, Associated Students, College of Sciences and Mathematics, and Research and Graduate Studies to DMB, and the National Science Foundation 2019 Graduate Research Fellowship to DMB. Funds to conduct the enrichment study were also provided by National Science Foundation Biological Oceanography Grants # 1442306 and #1635913 to RVT and 1547952 to DEB. Material are also supported by the U.S. National Science Foundation under Grant OCE#16-37396, as well as a generous gift from the Gordon and Betty Moore Foundation. This work represents a contribution of the Mo'orea Coral Reef (MCR) LTER Site and is CSUN Marine Biology contribution #XXX. Research was completed under permits issued by the French Polynesian Government (De´le´gation a`la Recherche) and the Haut-commissariat de la Re´publique en Polyne´sie Francaise (DTRT) (Protocole d’Accueil 2005-2019).
 
