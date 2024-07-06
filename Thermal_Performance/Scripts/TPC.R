@@ -34,7 +34,7 @@ glimpse(mydata)
 mydata <- mydata %>% #filtering out NP, removes it from the list 
   filter(rate.type !="NP") 
 
-mydata$log.rate <- log(mydata$umol.cm2.hr + 1)  #logging and adding 0.1 because a log of zero does not exist
+mydata$log.rate <- log(mydata$umol.cm2.hr + 1)  #logging and adding 1 because a log of zero does not exist
 
 # convert temp to K
 mydata$K<-mydata$Temp.C + 273.15
